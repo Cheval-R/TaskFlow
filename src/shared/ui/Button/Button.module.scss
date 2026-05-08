@@ -1,0 +1,45 @@
+@use 'var';
+
+.button {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: var.$text-lg;
+
+  width: 100%;
+  color: var.$text-primary;
+
+  background-color: var.$accent-blue;
+  border: none;
+  border-radius: var.$radius-sm;
+  padding:  10px;
+
+  outline: 2px solid var.$opacity-color;
+  outline-offset: 2px;
+
+  cursor: pointer;
+
+  transition: background-color var.$transition-slow ease-in,
+  outline-color var.$transition-slow ease-in,
+  transform var.$transition-fast ease-in;
+
+  @media (hover: hover) {
+    &:hover {
+      background-color: var.$ui-hover;
+    }
+  }
+
+  &:focus-visible {
+    background-color: var.$ui-hover;
+    outline-color: var.$ui-hover;
+  }
+
+  &:active {
+    transform: translateY(2px)
+  }
+
+  .icon {
+    color: var.$text-secondary;
+    padding: 2px;
+  }
+}

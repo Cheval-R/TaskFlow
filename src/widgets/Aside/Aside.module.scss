@@ -1,0 +1,14 @@
+@use '../../shared/styles/var' as var;
+
+.aside {
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: column;
+  gap: 30px;
+
+  background-color: var.$bg-primary;
+  height: 100%;
+  padding: 30px 15px;
+  border-right: 1px solid var.$border-strong;
+  width: var.$sidebar-width;
+}

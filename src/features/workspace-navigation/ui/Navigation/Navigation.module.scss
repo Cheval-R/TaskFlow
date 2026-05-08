@@ -1,0 +1,13 @@
+@use 'var';
+
+.navigation {
+  padding-block: 15px;
+  border-bottom: 1px solid var.$border-subtle;
+}
+
+.list {
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: column;
+  gap: 5px;
+}
