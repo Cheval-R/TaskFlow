@@ -1,13 +1,44 @@
-// import ss from './Day.module.scss'
-import * as React from "react";
+import Task from '@/features/tasks/ui/Task'
+import ss from './Day.module.scss'
+import { useTasks } from '@/features/tasks/model/useTasks.ts'
+import { useCreateTaskModal } from '@/features/create-task-modal/model/useCreateTaskModal.ts'
+import CreateTaskModal from '@/features/create-task-modal/ui/CreateTaskModal'
+import { useEffect, useRef, useState } from 'react'
 
-interface Props {
-  children?: React.ReactNode
-}
+interface Props {}
 
-export const Day = (props: Props) => {
-  const {children} = props;
+export const Day = ({}: Props) => {
+  const workspaceRef = useRef(null)
+  const { tasks } = useTasks()
+  const {
+    isOpen,
+    toggleCreateTaskModal,
+    openCreateTaskModal,
+    closeCreateTaskModal,
+  } = useCreateTaskModal()
+  const [clickCoordinateY, setClickCoordinateY] = useState<number>(0)
+
   return (
-    <>Day workspace{children}</>
+    <div
+      ref={workspaceRef}
+      className={ss.dayWorkspace}
+      onClick={(e) => {
+        if (e.target === workspaceRef.current) {
+          const startCoordinate = Math.round(e.nativeEvent.offsetY / 32) * 32
+          setClickCoordinateY(startCoordinate)
+          toggleCreateTaskModal()
+        }
+      }}
+    >
+      {tasks.map((task) => (
+        <Task key={task.id} task={task} />
+      ))}
+      {isOpen && (
+        <CreateTaskModal
+          yCoordinate={clickCoordinateY}
+          toClose={closeCreateTaskModal}
+        />
+      )}
+    </div>
   )
 }

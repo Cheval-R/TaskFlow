@@ -3,22 +3,14 @@ import type { ReactNode } from 'react'
 
 interface Props {
   children?: ReactNode
-  icon?: { url: string; alt: string }
+  icon?: ReactNode
+  onClick: () => void
 }
 
-export const Button = ({ children, icon }: Props) => {
+export const Button = ({ children, icon, onClick }: Props) => {
   return (
-    <button type="button" className={ss.button}>
-      {icon ? (
-        <img
-          className={ss.icon}
-          src={icon?.url}
-          alt={icon?.alt}
-          width="25"
-          height="25"
-          loading="lazy"
-        />
-      ) : null}
+    <button type="button" className={ss.button} onClick={onClick}>
+      <span className={ss.icon}>{icon ? icon : null}</span>
       <span className={ss.title}>{children}</span>
     </button>
   )

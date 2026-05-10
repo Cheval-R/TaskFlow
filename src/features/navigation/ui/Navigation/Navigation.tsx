@@ -1,7 +1,8 @@
 import ss from './Navigation.module.scss'
-import SidebarItem from '../../../../shared/ui/SidebarItem'
-import NavigationIcon from '../NavigationIcon'
-import plusIcon from '@/assets/icons/plus.svg'
+import SidebarItem from '@/shared/ui/SidebarItem'
+import PlusIcon from '@/assets/icons/plus.svg?react'
+import { Flex } from 'antd'
+
 interface Props {}
 
 export const Navigation = ({}: Props) => {
@@ -10,14 +11,7 @@ export const Navigation = ({}: Props) => {
       <ul className={ss.list}>
         <li className={ss.item}>
           <SidebarItem
-            icon={
-              <NavigationIcon
-                alt={''}
-                src={plusIcon}
-                width={'20'}
-                height={'20'}
-              />
-            }
+            icon={<PlusIcon />}
             label="Total"
             count={12}
             active={false}
@@ -26,14 +20,7 @@ export const Navigation = ({}: Props) => {
         </li>
         <li className={ss.item}>
           <SidebarItem
-            icon={
-              <NavigationIcon
-                alt={''}
-                src={plusIcon}
-                width={'20'}
-                height={'20'}
-              />
-            }
+            icon={<PlusIcon />}
             label="Today"
             count={4}
             active={false}
@@ -42,30 +29,16 @@ export const Navigation = ({}: Props) => {
         </li>
         <li className={ss.item}>
           <SidebarItem
-            icon={
-              <NavigationIcon
-                alt={''}
-                src={plusIcon}
-                width={'20'}
-                height={'20'}
-              />
-            }
+            icon={<PlusIcon />}
             label="Week"
             count={12}
-            active={false}
+            active={true}
             onClick={() => console.log('click')}
           />
         </li>
         <li className={ss.item}>
           <SidebarItem
-            icon={
-              <NavigationIcon
-                alt={''}
-                src={plusIcon}
-                width={'20'}
-                height={'20'}
-              />
-            }
+            icon={<PlusIcon />}
             label="Month"
             count={12}
             active={false}
@@ -74,14 +47,7 @@ export const Navigation = ({}: Props) => {
         </li>
         <li className={ss.item}>
           <SidebarItem
-            icon={
-              <NavigationIcon
-                alt={''}
-                src={plusIcon}
-                width={'20'}
-                height={'20'}
-              />
-            }
+            icon={<PlusIcon />}
             label="Today"
             count={12}
             active={false}

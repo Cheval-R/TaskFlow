@@ -1,0 +1,15 @@
+@use '../../shared/styles/var';
+
+.workspace {
+  width: 100%;
+  background-color: #161A20FF;
+}
+
+.zone {
+  display: flex;
+  //background-image: repeating-linear-gradient(to bottom, var.$border-subtle, var.$border-subtle 1px, transparent 1px, transparent var.$hour-size);
+  //background-size: var.$hour-size;
+  height: calc(100vh - 52px);
+  overflow-y: auto;
+  width: 100%;
+}

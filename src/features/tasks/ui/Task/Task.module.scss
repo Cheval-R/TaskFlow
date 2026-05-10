@@ -1,0 +1,11 @@
+@use '../../../../shared/styles/var';
+
+.task {
+  width: 80%;
+  height: 50px;
+  border-radius: var.$radius-sm;
+  background-color: var.$accent-blue;
+
+  text-align: center;
+  margin-left: 10px;
+}

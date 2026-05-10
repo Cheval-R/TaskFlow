@@ -1,127 +1,26 @@
 /* =========================================================
    FLOWDO UI KIT — SCSS VARIABLES
-   Premium Dark Productivity SaaS
 ========================================================= */
 
-/* =========================
-   🎨 COLORS — BACKGROUNDS
-========================= */
+@use 'global-style-tokens.css' as var;
 
-$bg-primary: #121419FF;
-$bg-secondary: #12141A;
-$bg-hovered: rgb(60 66 68 / 0.53);
-
-$surface-primary: #171A21;
-$surface-elevated: #1C1F28;
-$surface-hover: #222634;
-
-/* =========================
-   🧱 BORDERS
-========================= */
-
-$border-subtle: rgba(255, 255, 255, 0.06);
-$border-strong: rgba(255, 255, 255, 0.10);
-
-/* =========================
-   ✍️ TEXT COLORS
-========================= */
-
-$text-primary: #E6E8EE;
-$text-secondary: #b8bcc8;
-$text-muted: #6B7280;
-$text-disabled: #4B5563;
-
-/* =========================
-   🎯 ACCENT COLORS (TAGS)
-========================= */
-
-$accent-blue: #1e56cb;
-$accent-purple: #A78BFA;
-$accent-green: #34D399;
-$accent-amber: #FBBF24;
-$accent-red: #F87171;
-$accent-cyan: #22D3EE;
-
-/* =========================
-   ⚡ SYSTEM STATES
-========================= */
-
-$state-success: #22C55E;
-$state-warning: #FBBF24;
-$state-error: #EF4444;
-$state-info: #38BDF8;
-
-/* =========================
-   📐 SPACING (8px GRID)
-========================= */
-
-$space-xs: 4px;
-$space-sm: 8px;
-$space-md: 12px;
-$space-lg: 16px;
-$space-xl: 24px;
-$space-2xl: 32px;
-$space-3xl: 48px;
-
-/* =========================
-   🔲 BORDER RADIUS
-========================= */
-
-$radius-sm: 6px;
-$radius-md: 10px;
-$radius-lg: 12px;
-$radius-xl: 14px;
-$radius-2xl: 16px;
-
-/* =========================
-   🌫 SHADOWS
-========================= */
+$radius-sm: var(--radius-sm);
+$radius-md: var(--radius-md);
+$radius-lg: var(--radius-lg);
+$radius-xl: var(--radius-xl);
+$radius-2xl: var(--radius-2xl);
 
 $shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
 $shadow-md: 0 4px 12px rgba(0, 0, 0, 0.35);
 $shadow-lg: 0 12px 30px rgba(0, 0, 0, 0.45);
 
-/* =========================
-   🧭 LAYOUT
-========================= */
-
 $sidebar-width: 240px;
 $right-panel-width: 340px;
-
 $calendar-min-column: 150px;
-
-/* =========================
-   🎬 TRANSITIONS
-========================= */
 
 $transition-fast: 120ms;
 $transition-medium: 180ms;
 $transition-slow: 250ms;
-
-$ease-standard: cubic-bezier(0.2, 0.8, 0.2, 1);
-
-/* =========================
-   📅 CALENDAR GRID
-========================= */
-
-$grid-line-hour: rgba(255, 255, 255, 0.06);
-$grid-line-quarter: rgba(255, 255, 255, 0.03);
-
-$grid-hover-column: #1A1D26;
-$current-time-line: $accent-blue;
-
-/* =========================
-   🏷 TASK TOKENS
-========================= */
-
-$task-bg-opacity: 0.10;
-$task-border-opacity: 0.25;
-
-$task-hover-brightness: 1.08;
-
-/* =========================
-   ✍️ TYPOGRAPHY
-========================= */
 
 $font-family-base: Inter, system-ui, -apple-system, sans-serif;
 
@@ -133,18 +32,44 @@ $text-xl: 20px;
 $text-2xl: 24px;
 $text-3xl: 32px;
 
-/* =========================
-   🧩 Z-INDEX
-========================= */
-
 $z-base: 0;
 $z-dropdown: 10;
 $z-sidebar: 20;
 $z-modal: 50;
 $z-tooltip: 100;
 
-
-$ui-hover: #365fdf;
-
-
 $opacity-color: #00000000;
+
+$half-size: 32px;
+$hour-size: $half-size * 2;
+$header-height: 52px;
+
+$bg-primary: var(--bg-primary);
+$bg-secondary: var(--bg-secondary);
+$bg-element: var(--bg-element);
+$bg-hovered: var(--bg-hovered);
+
+$surface-primary: #171823;
+$surface-secondary: #1c2029;
+$surface-elevated: #232833;
+
+$accent-blue: var(--accent-blue);
+$accent-purple: var(--accent-purple);
+$accent-green: var(--accent-green);
+$accent-amber: var(--accent-amber);
+$accent-red: var(--accent-red);
+$accent-cyan: var(--accent-cyan);
+
+$border-default: #232833;
+$border-subtle: #2a303c;
+$border-strong: #34384a;
+
+$text-primary: var(--text-primary);
+$text-secondary: var(--text-secondary);
+$text-muted: var(--text-muted);
+$text-disabled: var(--text-disabled);
+
+$state-success: #22C55E;
+$state-warning: #FBBF24;
+$state-error: #EF4444;
+$state-info: #38BDF8;

@@ -1,5 +1,6 @@
 import ss from './SidebarItem.module.scss'
 import type { ReactNode } from 'react'
+import { Button } from 'antd'
 
 interface Props {
   icon: ReactNode
@@ -19,14 +20,20 @@ export const SidebarItem = ({
   size = 'medium',
 }: Props) => {
   return (
-    <button
-      type="button"
-      className={`${ss.sidebarItem} ${active ? ss.active : ''} ${ss[size]}`}
-      onClick={onClick}
-    >
-      {icon}
+    <Button variant={'outlined'} className={ss.sidebarItem}>
+      <span className={ss.icon}>{icon}</span>
       <span className={ss.label}>{label}</span>
       <span className={ss.counter}>{count}</span>
-    </button>
+    </Button>
+
+    // <button
+    //   type="button"
+    //   className={`${ss.sidebarItem} ${active ? ss.active : ''} ${ss[size]}`}
+    //   onClick={onClick}
+    // >
+    //   <span className={ss.icon}>{icon}</span>
+    //   <span className={ss.label}>{label}</span>
+    //   <span className={ss.counter}>{count}</span>
+    // </button>
   )
 }

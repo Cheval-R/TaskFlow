@@ -1,12 +1,12 @@
-import {Outlet} from "react-router";
-import Aside from "../../widgets/Aside";
+import Aside from '@/widgets/Aside'
 import ss from './Layout.module.scss'
+import WorkSpace from '@/widgets/WorkSpace'
 
 export const Layout = () => {
   return (
     <div className={ss.layout}>
-      <Aside/>
-      <Outlet/>
+      <Aside />
+      <WorkSpace />
     </div>
   )
 }

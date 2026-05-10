@@ -1,4 +1,4 @@
-@use 'var';
+@use '../../styles/var';
 
 .sidebarItem {
   display: flex;
@@ -12,16 +12,11 @@
   outline: 2px solid var.$opacity-color;
   outline-offset: 2px;
 
-  color: var.$text-secondary;
+  color: var.$text-primary;
 
   transition: background-color var.$transition-slow ease-in,
   outline-color var.$transition-slow ease-in,
   transform var.$transition-fast ease-in;
-
-  .active {
-    color: var.$text-primary;
-    background-color: #1D2126FF;
-  }
 
   @media (hover: hover) {
     &:hover {
@@ -31,12 +26,22 @@
 
   &:focus-visible {
     background-color: #1D2126FF;
-    outline-color: var.$ui-hover;
+    outline-color: var.$accent-blue;
   }
 
   &:active {
     transform: translateY(3px);
   }
+}
+
+.icon {
+  width: 25px;
+  height: 25px;
+}
+
+.active {
+  color: var.$text-primary;
+  background-color: #1D2126FF;
 }
 
 .label {

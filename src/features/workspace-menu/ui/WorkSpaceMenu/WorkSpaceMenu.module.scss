@@ -1,0 +1,7 @@
+@use '../../../../shared/styles/var';
+
+.menu {
+  background-color: var.$bg-primary;
+  height: var.$header-height;
+  position: sticky;
+}

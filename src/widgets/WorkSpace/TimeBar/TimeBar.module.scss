@@ -1,0 +1,17 @@
+@use '../../../shared/styles/var';
+
+.timeBar {
+  display: flex;
+  flex-direction: column;
+  height: var.$hour-size * 24;
+  border-right: 1px solid var.$border-strong;
+}
+
+
+.hour {
+  display: flex;
+  align-items: center;
+  min-height: 64px;
+  justify-content: center;
+  padding: 10px;
+}

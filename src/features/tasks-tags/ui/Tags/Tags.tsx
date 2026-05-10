@@ -1,8 +1,7 @@
 import ss from './Tags.module.scss'
-import SidebarItem from '../../../../shared/ui/SidebarItem'
-import TagsIcon from '../TagsIcon'
-import plusIcon from '@/assets/icons/plus.svg'
-import NavigationIcon from '../../../workspace-navigation/ui/NavigationIcon'
+import SidebarItem from '@/shared/ui/SidebarItem'
+import TagsIcon from '../TagsMark'
+import PlusIcon from '@/assets/icons/plus.svg?react'
 
 interface Props {
   tags: {
@@ -12,7 +11,7 @@ interface Props {
   }[]
 }
 
-export const Tags = ({ tags }: Props) => {
+export const Tags = ({}: Props) => {
   return (
     <div className={ss.tags}>
       <ul className={ss.list}>
@@ -68,9 +67,7 @@ export const Tags = ({ tags }: Props) => {
         </li>
       </ul>
       <SidebarItem
-        icon={
-          <NavigationIcon alt={''} src={plusIcon} width={'20'} height={'20'} />
-        }
+        icon={<PlusIcon />}
         label={'Add Tag'}
         onClick={() => console.log('click')}
       />
