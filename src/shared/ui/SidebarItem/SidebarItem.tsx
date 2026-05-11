@@ -1,30 +1,37 @@
 import ss from './SidebarItem.module.scss'
 import type { ReactNode } from 'react'
-import { Button } from 'antd'
+import { Badge, Button } from 'antd'
+import TagsMark from '../TagsMark'
 
 interface Props {
-  icon: ReactNode
   label: string
-  count?: number
+  count?: number | null
   active?: boolean
-  size?: 'small' | 'medium' | 'large'
+  color?: string
+  icon: ReactNode
   onClick: () => void
 }
 
 export const SidebarItem = ({
   active,
-  icon,
   onClick,
-  count,
+  count = null,
   label,
-  size = 'medium',
+  icon,
+  color,
 }: Props) => {
   return (
-    <Button variant={'outlined'} className={ss.sidebarItem}>
-      <span className={ss.icon}>{icon}</span>
-      <span className={ss.label}>{label}</span>
-      <span className={ss.counter}>{count}</span>
-    </Button>
+    <Badge
+      count={count}
+      size={'small'}
+      color={color}
+      className={ss.sidebarWrapper}
+    >
+      <Button className={ss.sidebarItem} size={'medium'} icon={icon} ghost>
+        <span className={ss.label}>{label}</span>
+        <span className={ss.count}>{count}</span>
+      </Button>
+    </Badge>
 
     // <button
     //   type="button"

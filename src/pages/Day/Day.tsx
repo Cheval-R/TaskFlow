@@ -33,12 +33,11 @@ export const Day = ({}: Props) => {
       {tasks.map((task) => (
         <Task key={task.id} task={task} />
       ))}
-      {isOpen && (
-        <CreateTaskModal
-          yCoordinate={clickCoordinateY}
-          toClose={closeCreateTaskModal}
-        />
-      )}
+
+      <CreateTaskModal
+        yCoordinate={clickCoordinateY}
+        toClose={closeCreateTaskModal}
+      />
     </div>
   )
 }

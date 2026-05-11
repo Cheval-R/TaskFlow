@@ -12,9 +12,15 @@ const useStyleTokens = () => {
 
   const radiusSM = getStyle('--radius-sm')
 
-  const bgPrimary = getStyle('---bg-primary')
+  const bgPrimary = getStyle('--bg-primary')
+  const bgSecondary = getStyle('--bg-secondary')
 
   const textPrimary = getStyle('--text-primary')
+  const textSecondary = getStyle('--text-secondary')
+
+  const borderControl = getStyle('--border-control')
+
+  const opacityColor = getStyle('--opacity-color')
 
   return {
     blueColor,
@@ -25,7 +31,11 @@ const useStyleTokens = () => {
     cyanColor,
     radiusSM,
     bgPrimary,
+    bgSecondary,
     textPrimary,
+    textSecondary,
+    borderControl,
+    opacityColor,
   }
 }
 

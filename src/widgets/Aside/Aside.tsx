@@ -6,7 +6,6 @@ import Navigation from '@/features/navigation/ui/Navigation'
 import Tags from '@/features/tasks-tags/ui/Tags'
 import PlusIcon from '@/assets/icons/plus.svg?react'
 import { Button as AntButton } from 'antd'
-import Button from '@/shared/ui/Button'
 import { PlusOutlined } from '@ant-design/icons'
 import { useState } from 'react'
 

@@ -38,7 +38,7 @@ $z-sidebar: 20;
 $z-modal: 50;
 $z-tooltip: 100;
 
-$opacity-color: #00000000;
+$opacity-color: var(--opacity-color);
 
 $half-size: 32px;
 $hour-size: $half-size * 2;
@@ -60,9 +60,10 @@ $accent-amber: var(--accent-amber);
 $accent-red: var(--accent-red);
 $accent-cyan: var(--accent-cyan);
 
-$border-default: #232833;
-$border-subtle: #2a303c;
-$border-strong: #34384a;
+$border-default: var(--border-default);
+$border-subtle: var(--border-subtle);
+$border-strong: var(--border-strong);
+$border-control: var(--border-control);
 
 $text-primary: var(--text-primary);
 $text-secondary: var(--text-secondary);
@@ -73,3 +74,5 @@ $state-success: #22C55E;
 $state-warning: #FBBF24;
 $state-error: #EF4444;
 $state-info: #38BDF8;
+
+$gap: 10px;

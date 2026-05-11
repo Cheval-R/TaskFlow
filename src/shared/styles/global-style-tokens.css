@@ -21,4 +21,11 @@
     --text-secondary: #a1a7b3;
     --text-muted: #6B7280;
     --text-disabled: #3f4654;
+
+    --border-default: #232833;
+    --border-subtle: #2a303c;
+    --border-strong: #34384a;
+    --border-control: #575a70;
+
+    --opacity-color: #00000000;
 }

@@ -1,7 +1,12 @@
 import ss from './Navigation.module.scss'
 import SidebarItem from '@/shared/ui/SidebarItem'
-import PlusIcon from '@/assets/icons/plus.svg?react'
-import { Flex } from 'antd'
+import {
+  AnalyticIcon,
+  TotalIcon,
+  WeeklyCalendarIcon,
+  DayCalendarIcon,
+  MonthlyCalendarIcon,
+} from '@/assets/icons'
 
 interface Props {}
 
@@ -11,7 +16,7 @@ export const Navigation = ({}: Props) => {
       <ul className={ss.list}>
         <li className={ss.item}>
           <SidebarItem
-            icon={<PlusIcon />}
+            icon={<TotalIcon />}
             label="Total"
             count={12}
             active={false}
@@ -20,7 +25,7 @@ export const Navigation = ({}: Props) => {
         </li>
         <li className={ss.item}>
           <SidebarItem
-            icon={<PlusIcon />}
+            icon={<DayCalendarIcon />}
             label="Today"
             count={4}
             active={false}
@@ -29,7 +34,7 @@ export const Navigation = ({}: Props) => {
         </li>
         <li className={ss.item}>
           <SidebarItem
-            icon={<PlusIcon />}
+            icon={<WeeklyCalendarIcon />}
             label="Week"
             count={12}
             active={true}
@@ -38,7 +43,7 @@ export const Navigation = ({}: Props) => {
         </li>
         <li className={ss.item}>
           <SidebarItem
-            icon={<PlusIcon />}
+            icon={<MonthlyCalendarIcon />}
             label="Month"
             count={12}
             active={false}
@@ -47,8 +52,8 @@ export const Navigation = ({}: Props) => {
         </li>
         <li className={ss.item}>
           <SidebarItem
-            icon={<PlusIcon />}
-            label="Today"
+            icon={<AnalyticIcon />}
+            label="Analytics"
             count={12}
             active={false}
             onClick={() => console.log('click')}
