@@ -4,7 +4,8 @@ import TagsIcon from '../../../../shared/ui/TagsMark'
 import PlusIcon from '@/assets/icons/plus.svg?react'
 import tags from '@/entities/tags/tags.ts'
 import TagsMark from '../../../../shared/ui/TagsMark'
-import { Tag } from 'antd'
+import Tag from '@/shared/ui/Tag'
+
 interface Props {
   tags: {
     label: string
@@ -20,13 +21,13 @@ export const Tags = ({}: Props) => {
         {tags.map((tag) => (
           <li className="item">
             <SidebarItem
-              label={tag.label}
               count={tag.taskCount}
               active={false}
               onClick={() => console.log('click')}
-              icon={<TagsMark color={tag.color} />}
               color={tag.color}
-            />
+            >
+              <Tag color={tag.color}>{tag.label}</Tag>
+            </SidebarItem>
           </li>
         ))}
       </ul>

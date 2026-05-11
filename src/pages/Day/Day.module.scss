@@ -5,7 +5,8 @@
   height: var.$hour-size * 24;
   width: 100%;
 
-  background-image: repeating-linear-gradient(to bottom, var.$border-subtle, var.$border-subtle 1px, transparent 1px, transparent var.$hour-size);
+  background-image: repeating-linear-gradient(to bottom, var.$border-subtle, var.$border-subtle 1px, transparent 1px, transparent var.$hour-size),
+  repeating-linear-gradient(to bottom, #232833FF, rgb(35 40 51 / 0.74) 1px, transparent 1px, transparent var.$half-size);
   background-size: var.$hour-size
 }
 

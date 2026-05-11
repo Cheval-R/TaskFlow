@@ -1,5 +1,5 @@
 import ss from './CreateTaskModal.module.scss'
-import { type ITask, useTasks } from '@/features/tasks/model/useTasks.ts'
+import { useTasks } from '@/features/tasks/model/useTasks.ts'
 import { Controller, useForm } from 'react-hook-form'
 import tags from '@/entities/tags/tags.ts'
 import {
@@ -17,6 +17,8 @@ import {
 import { useState } from 'react'
 import dayjs from 'dayjs'
 import TagsMark from '@/shared/ui/TagsMark'
+import formatMinuteToTime from '@/shared/model/formatMinuteToTime'
+import Tag from '@/shared/ui/Tag'
 
 interface Props {
   yCoordinate: number
@@ -35,18 +37,10 @@ export interface ICreateTaskForm {
   taskType: string
 }
 
-function minuteToTime(minute: number) {
-  if (minute < 60) return `0h ${minute}m`
-
-  const hour = Math.floor(minute / 60)
-  const min = String(((minute / 60) % 1) * 60).padStart(2, '0')
-  return `${hour}h ${min}m`
-}
-
 export const CreateTaskModal = ({ yCoordinate, toClose }: Props) => {
   const { addTask } = useTasks()
   const { register } = useForm<ICreateTaskForm>()
-  const [timeDifference, setTimeDifference] = useState<string>('0h 15m')
+  const [timeDifference, setTimeDifference] = useState<string>('00:15')
 
   const onCalendarChangeHandler: TimeRangePickerProps['onChange'] = (
     time,
@@ -57,7 +51,7 @@ export const CreateTaskModal = ({ yCoordinate, toClose }: Props) => {
     const endTime = time[1]
     if (!startTime || !endTime) return
     const diff = endTime.diff(startTime, 'minutes')
-    setTimeDifference(minuteToTime(diff))
+    setTimeDifference(formatMinuteToTime(diff))
   }
 
   return (
@@ -70,7 +64,7 @@ export const CreateTaskModal = ({ yCoordinate, toClose }: Props) => {
       className={ss.form}
       style={{ position: 'absolute', top: yCoordinate }}
     >
-      <Flex gap={'medium'} vertical={true}>
+      <Flex gap={'medium'} vertical>
         <Typography.Title level={4}>Create Task</Typography.Title>
         <Form.Item
           name={'taskName'}
@@ -104,16 +98,12 @@ export const CreateTaskModal = ({ yCoordinate, toClose }: Props) => {
             />
           </Form.Item>
 
-          <Form.Item name={'tag'}>
-            <Radio.Group></Radio.Group>
-          </Form.Item>
-
           <Button disabled size={'small'} className={ss.timeDuration}>
             {timeDifference}
           </Button>
         </Flex>
 
-        <Form.Item name={'tag'} label={'Tags'} vertical={true}>
+        <Form.Item name={'tag'} label={'Tags'} vertical>
           <Flex gap={'medium'}>
             <Radio.Group defaultValue={tags[0].value}>
               {tags.map((tag) => (
@@ -122,8 +112,7 @@ export const CreateTaskModal = ({ yCoordinate, toClose }: Props) => {
                   value={tag.value}
                   className={ss.radioButton}
                 >
-                  <TagsMark color={tag.color} />
-                  {tag.label}
+                  <Tag color={tag.color}>{tag.label}</Tag>
                 </Radio.Button>
               ))}
             </Radio.Group>

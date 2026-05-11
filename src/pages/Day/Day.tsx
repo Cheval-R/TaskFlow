@@ -4,12 +4,13 @@ import { useTasks } from '@/features/tasks/model/useTasks.ts'
 import { useCreateTaskModal } from '@/features/create-task-modal/model/useCreateTaskModal.ts'
 import CreateTaskModal from '@/features/create-task-modal/ui/CreateTaskModal'
 import { useEffect, useRef, useState } from 'react'
+import { tasks } from '@/features/tasks/model/tasksData.ts'
 
 interface Props {}
 
 export const Day = ({}: Props) => {
   const workspaceRef = useRef(null)
-  const { tasks } = useTasks()
+
   const {
     isOpen,
     toggleCreateTaskModal,
@@ -31,13 +32,13 @@ export const Day = ({}: Props) => {
       }}
     >
       {tasks.map((task) => (
-        <Task key={task.id} task={task} />
+        <Task key={task.id} {...task} />
       ))}
 
-      <CreateTaskModal
-        yCoordinate={clickCoordinateY}
-        toClose={closeCreateTaskModal}
-      />
+      {/*<CreateTaskModal*/}
+      {/*  yCoordinate={clickCoordinateY}*/}
+      {/*  toClose={closeCreateTaskModal}*/}
+      {/*/>*/}
     </div>
   )
 }

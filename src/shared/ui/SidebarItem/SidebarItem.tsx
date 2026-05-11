@@ -4,21 +4,21 @@ import { Badge, Button } from 'antd'
 import TagsMark from '../TagsMark'
 
 interface Props {
-  label: string
   count?: number | null
   active?: boolean
   color?: string
-  icon: ReactNode
+  icon?: ReactNode
   onClick: () => void
+  children: ReactNode
 }
 
 export const SidebarItem = ({
   active,
   onClick,
   count = null,
-  label,
   icon,
   color,
+  children,
 }: Props) => {
   return (
     <Badge
@@ -28,7 +28,7 @@ export const SidebarItem = ({
       className={ss.sidebarWrapper}
     >
       <Button className={ss.sidebarItem} size={'medium'} icon={icon} ghost>
-        <span className={ss.label}>{label}</span>
+        <span className={ss.label}>{children}</span>
         <span className={ss.count}>{count}</span>
       </Button>
     </Badge>

@@ -1,14 +1,6 @@
 import { useState } from 'react'
-import type { IntRange } from 'type-fest'
-export interface ITask {
-  id: string
-  name: string
-  description?: string
-  // time: IntRange<0, 23>
+import type { ITask } from '@/features/tasks/model/task.types.ts'
 
-  startCoordinate: number
-  // endCoordinate: number
-}
 const useTasks = () => {
   const [tasks, setTasks] = useState<ITask[]>([])
   function addTask(newTask: ITask) {
