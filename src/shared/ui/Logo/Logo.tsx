@@ -1,10 +1,9 @@
 import ss from './Logo.module.scss'
 
 interface Props {
+  className?: string
 }
 
-export const Logo = ({}: Props) => {
-  return (
-    <h1 className={ss.logo}>Task Flow</h1>
-  )
+export const Logo = ({ className }: Props) => {
+  return <h1 className={className}>Task Flow</h1>
 }

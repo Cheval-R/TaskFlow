@@ -21,17 +21,10 @@ export const SidebarItem = ({
   children,
 }: Props) => {
   return (
-    <Badge
-      count={count}
-      size={'small'}
-      color={color}
-      className={ss.sidebarWrapper}
-    >
-      <Button className={ss.sidebarItem} size={'medium'} icon={icon} ghost>
-        <span className={ss.label}>{children}</span>
-        <span className={ss.count}>{count}</span>
-      </Button>
-    </Badge>
+    <Button className={ss.sidebarItem} size={'medium'} icon={icon} ghost>
+      <span className={ss.label}>{children}</span>
+      <span className={ss.count}>{count}</span>
+    </Button>
 
     // <button
     //   type="button"

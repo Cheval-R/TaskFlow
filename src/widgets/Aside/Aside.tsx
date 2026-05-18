@@ -15,27 +15,29 @@ export const Aside = ({}: Props) => {
   const [iconAnimated, setIconAnimated] = useState(false)
   return (
     <aside className={ss.aside}>
-      <Logo />
-      <AntButton
-        type={'primary'}
-        size={'large'}
-        className={ss.btn}
-        icon={
-          <PlusIcon
-            className={iconAnimated ? buttonStyle.animate : ''}
-            onAnimationEnd={() => setIconAnimated(false)}
-          />
-        }
-        iconPlacement={'start'}
-        onClick={() => {
-          setIconAnimated((prev) => !prev)
-        }}
-      >
-        Add Task
-      </AntButton>
-      <Navigation />
-      <Tags tags={[]} />
-      <p>CALENDAR</p>
+      <Logo className={ss.logo} />
+      <div className={ss.content}>
+        <AntButton
+          type={'primary'}
+          size={'medium'}
+          className={ss.btn}
+          icon={
+            <PlusIcon
+              className={iconAnimated ? buttonStyle.animate : ''}
+              onAnimationEnd={() => setIconAnimated(false)}
+            />
+          }
+          iconPlacement={'start'}
+          onClick={() => {
+            setIconAnimated((prev) => !prev)
+          }}
+        >
+          Add Task
+        </AntButton>
+        <Navigation />
+        <Tags tags={[]} />
+        <p>CALENDAR</p>
+      </div>
     </aside>
   )
 }

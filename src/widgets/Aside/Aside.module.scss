@@ -1,4 +1,4 @@
-@use '@/shared/styles/var' as var;
+@use 'var';
 
 .aside {
   display: flex;
@@ -8,12 +8,25 @@
 
   background-color: var.$bg-primary;
   height: 100vh;
-  overflow: auto;
-  padding: 30px 15px;
+
+  padding: 30px 15px 10px;
   border-right: 1px solid var.$border-strong;
   width: var.$sidebar-width;
 }
 
+.content {
+  width: 100%;
+  overflow-y: auto;
+
+}
+
+.logo {
+  font-size: var.$text-xl;
+  position: sticky;
+}
+
 .btn {
-  padding: 10px;
+  justify-content: flex-start;
+  text-align: left;
+  width: 100%;
 }

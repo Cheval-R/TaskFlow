@@ -2,6 +2,7 @@ import formatMinuteToTime from '@/shared/model/formatMinuteToTime'
 import ss from './Task.module.scss'
 import type { ITag } from '@/shared/types/tag.types.ts'
 import Tag from '@/shared/ui/Tag'
+import type { CSSProperties } from 'react'
 
 interface Props {
   label: string
@@ -11,6 +12,8 @@ interface Props {
   duration: number
   endTime: number
 }
+
+type CSSVars = CSSProperties & Record<`--${string}`, string | number>
 
 export const Task = ({
   tag,
@@ -26,13 +29,14 @@ export const Task = ({
   return (
     <div
       className={ss.task}
-      style={{
-        position: 'absolute',
-        top: getPixelFromTime(startTime),
-        height: getPixelFromTime(duration),
-        borderLeft: `5px solid ${tag.color}`,
-        backgroundColor: `${tag.color}66`,
-      }}
+      style={
+        {
+          '--task-color': tag.color,
+          position: 'absolute',
+          top: getPixelFromTime(startTime),
+          height: getPixelFromTime(duration),
+        } as CSSProperties
+      }
     >
       <div className={ss.time}>
         {`${formatMinuteToTime(startTime)} - ${formatMinuteToTime(endTime)}`}

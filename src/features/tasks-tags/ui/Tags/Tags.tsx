@@ -1,9 +1,9 @@
 import ss from './Tags.module.scss'
 import SidebarItem from '@/shared/ui/SidebarItem'
-import TagsIcon from '../../../../shared/ui/TagsMark'
+import TagsIcon from '@/shared/ui/TagsMark'
 import PlusIcon from '@/assets/icons/plus.svg?react'
 import tags from '@/entities/tags/tags.ts'
-import TagsMark from '../../../../shared/ui/TagsMark'
+import TagsMark from '@/shared/ui/TagsMark'
 import Tag from '@/shared/ui/Tag'
 
 interface Props {

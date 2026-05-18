@@ -17,47 +17,52 @@ export const Navigation = ({}: Props) => {
         <li className={ss.item}>
           <SidebarItem
             icon={<TotalIcon />}
-            label="Total"
             count={12}
             active={false}
             onClick={() => console.log('click')}
-          />
+          >
+            Total
+          </SidebarItem>
         </li>
         <li className={ss.item}>
           <SidebarItem
             icon={<DayCalendarIcon />}
-            label="Today"
             count={4}
             active={false}
             onClick={() => console.log('click')}
-          />
+          >
+            Today
+          </SidebarItem>
         </li>
         <li className={ss.item}>
           <SidebarItem
             icon={<WeeklyCalendarIcon />}
-            label="Week"
             count={12}
             active={true}
             onClick={() => console.log('click')}
-          />
+          >
+            Week
+          </SidebarItem>
         </li>
         <li className={ss.item}>
           <SidebarItem
             icon={<MonthlyCalendarIcon />}
-            label="Month"
             count={12}
             active={false}
             onClick={() => console.log('click')}
-          />
+          >
+            Month
+          </SidebarItem>
         </li>
         <li className={ss.item}>
           <SidebarItem
             icon={<AnalyticIcon />}
-            label="Analytics"
             count={12}
             active={false}
             onClick={() => console.log('click')}
-          />
+          >
+            Analytics
+          </SidebarItem>
         </li>
       </ul>
     </nav>
