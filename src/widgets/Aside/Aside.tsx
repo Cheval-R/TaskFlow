@@ -3,7 +3,7 @@ import buttonStyle from '@/shared/ui/Button/Button.module.scss'
 import Logo from '@/shared/ui/Logo'
 
 import Navigation from '@/features/navigation/ui/Navigation'
-import Tags from '@/features/tasks-tags/ui/Tags'
+import Tags from '../../entities/tag/ui/Tags'
 import PlusIcon from '@/assets/icons/plus.svg?react'
 import { Button as AntButton } from 'antd'
 import { PlusOutlined } from '@ant-design/icons'

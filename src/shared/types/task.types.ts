@@ -1,11 +1,11 @@
 import type { ITag } from '@/shared/types/tag.types.ts'
+import type { Dayjs } from 'dayjs'
 
 export interface ITask {
   id: string
   label: string
   description: string
-  tag: ITag
-  startTime: number
-  endTime: number
-  duration: number
+  tagValue: string
+  date: Dayjs
+  timeRange: [Dayjs, Dayjs]
 }

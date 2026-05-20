@@ -1,4 +1,4 @@
-import type { ITag } from '@/shared/types/tag.types.ts'
+import type { ITag } from 'src/shared/types/tag.types.ts'
 
 const tags: ITag[] = [
   { label: 'Work', value: 'work', color: '#306DEB', taskCount: 1 },

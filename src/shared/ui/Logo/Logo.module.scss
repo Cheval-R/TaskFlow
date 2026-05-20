@@ -1,5 +1,7 @@
 @use 'var';
 
 .logo {
+  display: flex;
+  align-items: center;
   font-size: var.$text-xl;
 }

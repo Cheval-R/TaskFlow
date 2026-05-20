@@ -5,5 +5,10 @@ interface Props {
 }
 
 export const Logo = ({ className }: Props) => {
-  return <h1 className={className}>Task Flow</h1>
+  return (
+    <div className={ss.logo}>
+      <img src={'/logo-with-text.png'} alt={''} />
+      {/*<h1 className={className}>Task Flow</h1>*/}
+    </div>
+  )
 }

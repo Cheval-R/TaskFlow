@@ -25,15 +25,5 @@ export const SidebarItem = ({
       <span className={ss.label}>{children}</span>
       <span className={ss.count}>{count}</span>
     </Button>
-
-    // <button
-    //   type="button"
-    //   className={`${ss.sidebarItem} ${active ? ss.active : ''} ${ss[size]}`}
-    //   onClick={onClick}
-    // >
-    //   <span className={ss.icon}>{icon}</span>
-    //   <span className={ss.label}>{label}</span>
-    //   <span className={ss.counter}>{count}</span>
-    // </button>
   )
 }

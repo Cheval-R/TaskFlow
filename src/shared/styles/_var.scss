@@ -40,8 +40,8 @@ $z-tooltip: 100;
 
 $opacity-color: var(--opacity-color);
 
-$half-size: 32px;
-$hour-size: $half-size * 2;
+$half-size: var(--half-size);
+$hour-size: var(--hour-size);
 $header-height: 52px;
 
 $bg-primary: var(--bg-primary);

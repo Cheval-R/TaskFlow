@@ -2,7 +2,7 @@
 
 .dayWorkspace {
   position: relative;
-  height: var.$hour-size * 24;
+  height: calc(var(--hour-size) * 24);
   width: 100%;
 
   background-image: repeating-linear-gradient(to bottom, var.$border-subtle, var.$border-subtle 1px, transparent 1px, transparent var.$hour-size),

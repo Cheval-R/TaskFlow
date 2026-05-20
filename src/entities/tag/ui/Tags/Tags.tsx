@@ -1,10 +1,7 @@
 import ss from './Tags.module.scss'
+import tags from '../../model/tags.ts'
 import SidebarItem from '@/shared/ui/SidebarItem'
-import TagsIcon from '@/shared/ui/TagsMark'
-import PlusIcon from '@/assets/icons/plus.svg?react'
-import tags from '@/entities/tags/tags.ts'
-import TagsMark from '@/shared/ui/TagsMark'
-import Tag from '@/shared/ui/Tag'
+import { Tag } from '@/shared/ui/Tag/Tag.tsx'
 
 interface Props {
   tags: {
@@ -19,7 +16,7 @@ export const Tags = ({}: Props) => {
     <div className={ss.tags}>
       <ul className={ss.list}>
         {tags.map((tag) => (
-          <li className="item">
+          <li className="item" key={tag.value}>
             <SidebarItem
               count={tag.taskCount}
               active={false}

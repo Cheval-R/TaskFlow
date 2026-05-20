@@ -1,14 +1,21 @@
-import Task from '@/features/tasks/ui/Task'
+import Task from '../../entities/task/ui/Task'
 import ss from './Day.module.scss'
-import { useTasks } from '@/features/tasks/model/useTasks.ts'
 import { useCreateTaskModal } from '@/features/create-task-modal/model/useCreateTaskModal.ts'
 import CreateTaskModal from '@/features/create-task-modal/ui/CreateTaskModal'
-import { useEffect, useRef, useState } from 'react'
-import { tasks } from '@/features/tasks/model/tasksData.ts'
+import { useRef, useState } from 'react'
+import {
+  useTasksContext,
+  useTasksDispatchContext,
+} from '@/entities/task/model/TasksContext.ts'
+import useTasks from '@/entities/task/model/useTasks.ts'
+import useStyleTokens from '@/shared/libs/useStyleTokens.ts'
 
 interface Props {}
 
 export const Day = ({}: Props) => {
+  const tasks = useTasksContext()
+  const { halfSize } = useStyleTokens()
+  const { addTaskHandler, deleteTaskHandler, updateTaskHandler } = useTasks()
   const workspaceRef = useRef(null)
 
   const {
@@ -25,20 +32,22 @@ export const Day = ({}: Props) => {
       className={ss.dayWorkspace}
       onClick={(e) => {
         if (e.target === workspaceRef.current) {
-          const startCoordinate = Math.round(e.nativeEvent.offsetY / 32) * 32
+          const startCoordinate =
+            Math.round(e.nativeEvent.offsetY / halfSize) * halfSize
           setClickCoordinateY(startCoordinate)
           toggleCreateTaskModal()
         }
       }}
     >
-      {tasks.map((task) => (
-        <Task key={task.id} {...task} />
-      ))}
+      {tasks.map((task) => {
+        console.log(task)
+        return <Task key={task.id} {...task} />
+      })}
 
-      {/*<CreateTaskModal*/}
-      {/*  yCoordinate={clickCoordinateY}*/}
-      {/*  toClose={closeCreateTaskModal}*/}
-      {/*/>*/}
+      <CreateTaskModal
+        yCoordinate={clickCoordinateY}
+        toClose={closeCreateTaskModal}
+      />
     </div>
   )
 }

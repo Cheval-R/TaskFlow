@@ -1,5 +1,4 @@
 export default function minuteToTime(minute: number) {
-  console.log(minute)
   if (minute < 60) return `00:${minute}`
 
   const hour = String(Math.floor(minute / 60)).padStart(2, '0')

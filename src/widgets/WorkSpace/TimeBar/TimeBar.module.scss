@@ -3,7 +3,7 @@
 .timeBar {
   display: flex;
   flex-direction: column;
-  height: var.$hour-size * 24;
+  height: calc(var(--hour-size) * 24);
   border-right: 1px solid var.$border-strong;
 }
 
@@ -11,7 +11,10 @@
 .hour {
   display: flex;
   align-items: center;
-  min-height: 64px;
+  min-height: var.$hour-size;
   justify-content: center;
   padding: 10px;
+
+  margin-left: 5px;
+  border-block: 1px solid var.$border-default;
 }

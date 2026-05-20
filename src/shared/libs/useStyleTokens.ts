@@ -22,6 +22,9 @@ const useStyleTokens = () => {
 
   const opacityColor = getStyle('--opacity-color')
 
+  const hourSize = Number(getStyle('--hour-size').split('px')[0])
+  const halfSize = Number(getStyle('--half-size').split('px')[0])
+
   return {
     blueColor,
     purpleColor,
@@ -36,6 +39,8 @@ const useStyleTokens = () => {
     textSecondary,
     borderControl,
     opacityColor,
+    hourSize,
+    halfSize,
   }
 }
 

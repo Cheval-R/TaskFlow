@@ -28,4 +28,7 @@
     --border-control: #575a70;
 
     --opacity-color: #00000000;
+
+    --half-size: 48px;
+    --hour-size: 96px;
 }
