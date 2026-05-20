@@ -33,7 +33,7 @@ export const Day = ({}: Props) => {
       onClick={(e) => {
         if (e.target === workspaceRef.current) {
           const startCoordinate =
-            Math.round(e.nativeEvent.offsetY / halfSize) * halfSize
+            Math.floor(e.nativeEvent.offsetY / halfSize) * halfSize
           setClickCoordinateY(startCoordinate)
           toggleCreateTaskModal()
         }
@@ -43,11 +43,12 @@ export const Day = ({}: Props) => {
         console.log(task)
         return <Task key={task.id} {...task} />
       })}
-
-      <CreateTaskModal
-        yCoordinate={clickCoordinateY}
-        toClose={closeCreateTaskModal}
-      />
+      {isOpen ? (
+        <CreateTaskModal
+          yCoordinate={clickCoordinateY}
+          toClose={closeCreateTaskModal}
+        />
+      ) : null}
     </div>
   )
 }

@@ -31,7 +31,7 @@ export const Navigation = ({}: Props) => {
             active={false}
             onClick={() => console.log('click')}
           >
-            Today
+            Day
           </SidebarItem>
         </li>
         <li className={ss.item}>

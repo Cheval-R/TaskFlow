@@ -1,5 +1,4 @@
 import ss from './CreateTaskModal.module.scss'
-import { Controller, useForm } from 'react-hook-form'
 import tags from '../../../../entities/tag/model/tags.ts'
 import {
   Button,
@@ -17,7 +16,6 @@ import dayjs, { Dayjs } from 'dayjs'
 import formatMinuteToTime from '@/shared/model/formatMinuteToTime'
 import Tag from '@/shared/ui/Tag'
 import useTasks from '@/entities/task/model/useTasks.ts'
-import type { ITag } from '@/shared/types/tag.types.ts'
 import {
   convertMinutesToTime,
   convertPixelsToMinutes,
@@ -36,12 +34,17 @@ export interface ICreateTaskForm {
   tagValue: string
 }
 
+function convertMinutesToDayjs(minutes: number) {
+  return dayjs(convertMinutesToTime(convertPixelsToMinutes(minutes)), 'HH:mm')
+}
+
 export const CreateTaskModal = ({ yCoordinate, toClose }: Props) => {
-  const startTime = convertMinutesToTime(convertPixelsToMinutes(yCoordinate))
+  const initialStartTime = convertMinutesToDayjs(yCoordinate)
+  const initialEndTime = initialStartTime.add(60, 'minute')
+
   const { addTaskHandler } = useTasks()
 
-  const { control } = useForm<ICreateTaskForm>()
-  const [timeDifference, setTimeDifference] = useState<string>('00:15')
+  const [timeDifference, setTimeDifference] = useState<string>('01:00')
 
   const onCalendarChangeHandler: TimeRangePickerProps['onChange'] = (
     time,
@@ -60,10 +63,11 @@ export const CreateTaskModal = ({ yCoordinate, toClose }: Props) => {
       name={'createTaskModal'}
       onFinish={(e: ICreateTaskForm) => {
         addTaskHandler({ ...e, id: crypto.randomUUID() })
+        toClose()
       }}
       layout={'vertical'}
       className={ss.form}
-      style={{ position: 'absolute', top: yCoordinate }}
+      style={{ position: 'absolute', top: yCoordinate, left: '20px' }}
     >
       <Flex gap={'medium'} vertical>
         <Typography.Title level={4}>Create Task</Typography.Title>
@@ -94,7 +98,7 @@ export const CreateTaskModal = ({ yCoordinate, toClose }: Props) => {
 
           <Form.Item
             name={'timeRange'}
-            initialValue={[dayjs(startTime, 'HH:mm'), dayjs('12:15', 'HH:mm')]}
+            initialValue={[initialStartTime, initialEndTime]}
             rules={[{ required: true, message: 'Required field' }]}
           >
             <TimePicker.RangePicker
