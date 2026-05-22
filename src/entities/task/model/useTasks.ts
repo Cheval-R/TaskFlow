@@ -20,6 +20,7 @@ export default function useTasks() {
   }
 
   const updateTaskHandler = (task: ITask) => {
+    console.log(task)
     dispatch({
       type: EActionPoints.UPDATE_TASK,
       payload: { ...task },

@@ -1,21 +1,21 @@
 import { useState } from 'react'
 
 export function useCreateTaskModal() {
-  const [isOpen, setIsOpen] = useState(false)
+  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false)
 
   const toggleCreateTaskModal = () => {
-    setIsOpen((prevState) => !prevState)
+    setIsCreateModalOpen((prevState) => !prevState)
   }
   const openCreateTaskModal = () => {
-    setIsOpen(true)
+    setIsCreateModalOpen(true)
   }
   const closeCreateTaskModal = () => {
-    setIsOpen(false)
+    setIsCreateModalOpen(false)
   }
   return {
     toggleCreateTaskModal,
     openCreateTaskModal,
     closeCreateTaskModal,
-    isOpen,
+    isCreateModalOpen,
   }
 }

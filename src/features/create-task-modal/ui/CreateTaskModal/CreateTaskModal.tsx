@@ -15,15 +15,18 @@ import { useState } from 'react'
 import dayjs, { Dayjs } from 'dayjs'
 import formatMinuteToTime from '@/shared/model/formatMinuteToTime'
 import Tag from '@/shared/ui/Tag'
-import useTasks from '@/entities/task/model/useTasks.ts'
 import {
   convertMinutesToTime,
   convertPixelsToMinutes,
 } from '@/shared/model/timeConvert.ts'
+import type { ITask } from '@/shared/types/task.types.ts'
 
 interface Props {
   yCoordinate: number
   toClose: () => void
+  name: string
+  initialValues?: ITask
+  onSubmitHandler: (e: ITask) => void
 }
 
 export interface ICreateTaskForm {
@@ -38,11 +41,29 @@ function convertMinutesToDayjs(minutes: number) {
   return dayjs(convertMinutesToTime(convertPixelsToMinutes(minutes)), 'HH:mm')
 }
 
-export const CreateTaskModal = ({ yCoordinate, toClose }: Props) => {
-  const initialStartTime = convertMinutesToDayjs(yCoordinate)
-  const initialEndTime = initialStartTime.add(60, 'minute')
+export const CreateTaskModal = ({
+  yCoordinate,
+  toClose,
+  name,
+  initialValues,
+  onSubmitHandler,
+}: Props) => {
+  function createDefaultInitialValues() {
+    return {
+      timeRange: [
+        convertMinutesToDayjs(yCoordinate),
+        convertMinutesToDayjs(yCoordinate).add(60, 'minute'),
+      ],
+      label: '',
+      description: '',
+      date: '',
+      tagValue: '',
+    }
+  }
 
-  const { addTaskHandler } = useTasks()
+  const initialFormValues = initialValues
+    ? initialValues
+    : createDefaultInitialValues()
 
   const [timeDifference, setTimeDifference] = useState<string>('01:00')
 
@@ -59,15 +80,16 @@ export const CreateTaskModal = ({ yCoordinate, toClose }: Props) => {
   }
 
   return (
-    <Form<ICreateTaskForm>
-      name={'createTaskModal'}
-      onFinish={(e: ICreateTaskForm) => {
-        addTaskHandler({ ...e, id: crypto.randomUUID() })
+    <Form<ITask>
+      name={name}
+      onFinish={(e: ITask) => {
+        onSubmitHandler(e)
         toClose()
       }}
       layout={'vertical'}
       className={ss.form}
       style={{ position: 'absolute', top: yCoordinate, left: '20px' }}
+      initialValues={initialFormValues}
     >
       <Flex gap={'medium'} vertical>
         <Typography.Title level={4}>Create Task</Typography.Title>
@@ -98,7 +120,7 @@ export const CreateTaskModal = ({ yCoordinate, toClose }: Props) => {
 
           <Form.Item
             name={'timeRange'}
-            initialValue={[initialStartTime, initialEndTime]}
+            // initialValue={[initialStartTime, initialEndTime]}
             rules={[{ required: true, message: 'Required field' }]}
           >
             <TimePicker.RangePicker
@@ -129,11 +151,16 @@ export const CreateTaskModal = ({ yCoordinate, toClose }: Props) => {
           </Flex>
         </Form.Item>
 
-        <Form.Item>
-          <Button htmlType={'submit'} type={'primary'}>
-            Create Task
+        <Flex justify={'space-between'}>
+          <Form.Item>
+            <Button htmlType={'submit'} type={'primary'}>
+              Create Task
+            </Button>
+          </Form.Item>
+          <Button danger={true} onClick={toClose} htmlType={'button'}>
+            Cancel
           </Button>
-        </Form.Item>
+        </Flex>
       </Flex>
     </Form>
   )

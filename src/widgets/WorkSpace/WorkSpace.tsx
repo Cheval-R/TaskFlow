@@ -9,7 +9,7 @@ export const WorkSpace = ({}: Props) => {
   return (
     <div className={ss.workspace}>
       <WorkSpaceMenu />
-      <div className={ss.zone}>
+      <div className={ss.timeZone} data-time-zone>
         <TimeBar />
         <Outlet />
       </div>

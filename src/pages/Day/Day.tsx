@@ -17,9 +17,10 @@ export const Day = ({}: Props) => {
   const { halfSize } = useStyleTokens()
   const { addTaskHandler, deleteTaskHandler, updateTaskHandler } = useTasks()
   const workspaceRef = useRef(null)
+  const createTaskFormRef = useRef(null)
 
   const {
-    isOpen,
+    isCreateModalOpen,
     toggleCreateTaskModal,
     openCreateTaskModal,
     closeCreateTaskModal,
@@ -31,22 +32,35 @@ export const Day = ({}: Props) => {
       ref={workspaceRef}
       className={ss.dayWorkspace}
       onClick={(e) => {
+        const target = e.target
+        if (!(target instanceof Element)) return
+
+        if (
+          target.closest('[data-time-zone]') &&
+          isCreateModalOpen &&
+          !target.closest('#createTaskForm')
+        ) {
+          closeCreateTaskModal()
+        }
+      }}
+      onDoubleClick={(e) => {
         if (e.target === workspaceRef.current) {
           const startCoordinate =
             Math.floor(e.nativeEvent.offsetY / halfSize) * halfSize
           setClickCoordinateY(startCoordinate)
-          toggleCreateTaskModal()
+          openCreateTaskModal()
         }
       }}
     >
       {tasks.map((task) => {
-        console.log(task)
-        return <Task key={task.id} {...task} />
+        return <Task key={task.id} task={task} />
       })}
-      {isOpen ? (
+      {isCreateModalOpen ? (
         <CreateTaskModal
+          name={'createTaskForm'}
           yCoordinate={clickCoordinateY}
           toClose={closeCreateTaskModal}
+          onSubmitHandler={addTaskHandler}
         />
       ) : null}
     </div>

@@ -1,6 +1,7 @@
 @use 'var';
 
 .form {
+  z-index: 100;
   border-radius: var.$radius-md;
   border: 1px solid var.$border-subtle;
   background-color: var.$bg-secondary;
