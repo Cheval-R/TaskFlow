@@ -21,6 +21,38 @@ function App() {
       timeRange: [dayjs('1:00', 'HH:mm'), dayjs('2:00', 'HH:mm')],
       date: dayjs(),
     },
+    {
+      id: '3',
+      label: 'Evening Routine',
+      description: 'desc',
+      tagValue: 'health',
+      timeRange: [dayjs('1:45', 'HH:mm'), dayjs('2:30', 'HH:mm')],
+      date: dayjs(),
+    },
+    {
+      id: '2',
+      label: 'Day Routine',
+      description: 'desc',
+      tagValue: 'business',
+      timeRange: [dayjs('1:15', 'HH:mm'), dayjs('3:00', 'HH:mm')],
+      date: dayjs(),
+    },
+    {
+      id: '4',
+      label: 'Routine',
+      description: 'desc',
+      tagValue: 'health',
+      timeRange: [dayjs('1:00', 'HH:mm'), dayjs('2:30', 'HH:mm')],
+      date: dayjs(),
+    },
+    {
+      id: '5',
+      label: 'Night',
+      description: 'desc',
+      tagValue: 'work',
+      timeRange: [dayjs('2:30', 'HH:mm'), dayjs('3:30', 'HH:mm')],
+      date: dayjs(),
+    },
   ])
   return (
     <ConfigProvider theme={antdTheme}>

@@ -26,6 +26,7 @@ interface Props {
   toClose: () => void
   name: string
   initialValues?: ITask
+  id?: string
   onSubmitHandler: (e: ITask) => void
 }
 
@@ -47,6 +48,7 @@ export const CreateTaskModal = ({
   name,
   initialValues,
   onSubmitHandler,
+  id,
 }: Props) => {
   function createDefaultInitialValues() {
     return {
@@ -83,12 +85,12 @@ export const CreateTaskModal = ({
     <Form<ITask>
       name={name}
       onFinish={(e: ITask) => {
-        onSubmitHandler(e)
+        onSubmitHandler({ ...e, id: id ? id : crypto.randomUUID() })
         toClose()
       }}
       layout={'vertical'}
       className={ss.form}
-      style={{ position: 'absolute', top: yCoordinate, left: '20px' }}
+      style={{ position: 'absolute', top: yCoordinate + 10, left: '125px' }}
       initialValues={initialFormValues}
     >
       <Flex gap={'medium'} vertical>

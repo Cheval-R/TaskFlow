@@ -9,6 +9,7 @@ import {
 } from '@/entities/task/model/TasksContext.ts'
 import useTasks from '@/entities/task/model/useTasks.ts'
 import useStyleTokens from '@/shared/libs/useStyleTokens.ts'
+import getTasksLayout from '@/entities/task/model/getTasksLayout.ts'
 
 interface Props {}
 
@@ -27,6 +28,8 @@ export const Day = ({}: Props) => {
   } = useCreateTaskModal()
   const [clickCoordinateY, setClickCoordinateY] = useState<number>(0)
 
+  console.log(tasks)
+  getTasksLayout(tasks)
   return (
     <div
       ref={workspaceRef}

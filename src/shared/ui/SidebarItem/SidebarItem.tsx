@@ -17,7 +17,6 @@ export const SidebarItem = ({
   onClick,
   count = null,
   icon,
-  color,
   children,
 }: Props) => {
   return (

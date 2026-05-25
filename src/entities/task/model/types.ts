@@ -10,3 +10,9 @@ export type TActionTask =
   | { type: EActionPoints.ADD_TASK; payload: ITask }
   | { type: EActionPoints.DELETE_TASK; payload: { id: string } }
   | { type: EActionPoints.UPDATE_TASK; payload: ITask }
+
+export interface ITaskLayout extends ITask {
+  leftPosition: number
+  columnWidth: number
+  columnIndex: number
+}
