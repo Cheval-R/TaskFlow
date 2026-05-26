@@ -1,40 +1,33 @@
 import type { ITask } from '@/shared/types/task.types.ts'
-import task from '@/entities/task/ui/Task'
 import type { ITaskLayout } from '@/entities/task/model/types.ts'
 import type { Dayjs } from 'dayjs'
 
-export default function getTasksLayout(tasks: ITask[]) {
+export default function getTasksLayout(tasks: ITask[], wrapperWidth: number) {
   const tempTasks = tasks.map((task) => task)
-  sortTasks(tempTasks)
-  console.log('sorted', tempTasks)
-  groupingTasks(tempTasks)
+  return groupingTasks(sortTasks(tempTasks), wrapperWidth)
 }
 
 function sortTasks(tasks: ITask[]) {
-  tasks.sort((a, b) => {
+  const tempArr = tasks.map((task) => task)
+  return tempArr.sort((a, b) => {
     const startTimes = [a.timeRange[0], b.timeRange[0]]
     const endTimes = [a.timeRange[1], b.timeRange[1]]
 
     const difference = startTimes[0].diff(startTimes[1])
 
-    if (difference === 0) {
-      console.log(endTimes[0].format('HH:mm'))
-      console.log(endTimes[1].format('HH:mm'))
-
-      return endTimes[1].diff(endTimes[0])
-    }
+    if (difference === 0) return endTimes[1].diff(endTimes[0])
 
     return difference
   })
 }
 
-function groupingTasks(tasks: ITask[]): ITaskLayout[] {
-  const returnedTasks: ITaskLayout[] = []
+function groupingTasks(tasks: ITask[], wrapperWidth: number): ITaskLayout[] {
+  let returnedTasks: ITaskLayout[] = []
 
-  const tasksGroup: ITask[] = []
+  let tasksGroup: ITask[] = []
   let groupEnd: number | undefined = undefined
 
-  tasks.forEach((task) => {
+  for (const task of tasks) {
     if (!groupEnd) {
       groupEnd = getMinutesFromStartOfDay(task.timeRange[1])
       tasksGroup.push(task)
@@ -43,16 +36,25 @@ function groupingTasks(tasks: ITask[]): ITaskLayout[] {
       groupEnd = Math.max(groupEnd, getMinutesFromStartOfDay(task.timeRange[1]))
     } else {
       // расскладываем текущую группу на колонки и начинаем новую
+      returnedTasks = [
+        ...returnedTasks,
+        ...sortTaskGroupByColumns(tasksGroup, wrapperWidth),
+      ]
+      tasksGroup = [task]
+      groupEnd = Math.max(groupEnd, getMinutesFromStartOfDay(task.timeRange[1]))
     }
-  })
-  sortTaskGroupByColumns(tasksGroup)
-  console.log('grouped', tasksGroup)
+  }
+  returnedTasks = [
+    ...returnedTasks,
+    ...sortTaskGroupByColumns(tasksGroup, wrapperWidth),
+  ]
+
   return returnedTasks
 }
 interface ITaskWithColumnIndex extends ITask {
   columnIndex: number
 }
-function sortTaskGroupByColumns(tasks: ITask[]) {
+function sortTaskGroupByColumns(tasks: ITask[], wrapperWidth: number) {
   const columnsEnds: number[] = []
 
   const sortedTasks = tasks.map((task) => {
@@ -74,16 +76,24 @@ function sortTaskGroupByColumns(tasks: ITask[]) {
     }
   })
 
-  calculateGroupColumnsWidth(sortedTasks, columnsEnds.length)
+  return calculateGroupColumnsWidth(
+    sortedTasks,
+    columnsEnds.length,
+    wrapperWidth,
+  )
 }
 
 function calculateGroupColumnsWidth(
   groupedTasks: ITaskWithColumnIndex[],
   columnCount: number,
+  wrapperWidth: number,
 ): ITaskLayout[] {
-  return groupedTasks.map((task) => {
-    const columnWidth = 100 / columnCount
-    const leftPosition = task.columnIndex * columnWidth
+  const tasksGap = 10
+  const columnWidth =
+    (wrapperWidth - (columnCount + 1) * tasksGap) / columnCount
+  return groupedTasks.map((task, index) => {
+    const leftPosition =
+      task.columnIndex * columnWidth + (task.columnIndex + 1) * tasksGap
     return { ...task, columnWidth, leftPosition }
   })
 }

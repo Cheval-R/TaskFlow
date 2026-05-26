@@ -9,9 +9,10 @@ import CreateTaskModal from '@/features/create-task-modal/ui/CreateTaskModal'
 import { useCreateTaskModal } from '@/features/create-task-modal/model/useCreateTaskModal.ts'
 import useTasks from '@/entities/task/model/useTasks.ts'
 import dayjs from 'dayjs'
+import type { ITaskLayout } from '@/entities/task/model/types.ts'
 
 interface Props {
-  task: ITask
+  task: ITaskLayout
 }
 
 type CSSVars = CSSProperties & Record<`--${string}`, string | number>
@@ -52,7 +53,9 @@ export const Task = ({ task }: Props) => {
             '--task-color': tag.color,
             position: 'absolute',
             top: startPosition,
+            left: task.leftPosition,
             height: taskHeight,
+            width: task.columnWidth,
           } as CSSProperties
         }
       >
