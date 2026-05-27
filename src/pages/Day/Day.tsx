@@ -71,6 +71,7 @@ export const Day = ({}: Props) => {
       }}
       onDoubleClick={(e) => {
         if (e.target === workspaceRef.current) {
+          console.log(halfSize)
           const startCoordinate =
             Math.floor(e.nativeEvent.offsetY / halfSize) * halfSize
           setClickCoordinateY(startCoordinate)

@@ -1,6 +1,8 @@
 @use 'var';
 
 .task {
+  overflow: hidden;
+
   container-type: size;
 
   text-align: left;
@@ -30,9 +32,13 @@
 
 .content {
   display: grid;
-  grid-template-rows: repeat(3, 1fr);
+  grid-template-rows: repeat(3, min-content);
+  justify-content: flex-start;
   align-items: center;
   gap: 5px;
+  line-height: 1;
+  -webkit-line-clamp: 2; // Определяем количество строк перед достижением многоточия
+
 }
 
 .time {
@@ -41,10 +47,19 @@
 }
 
 .label {
+  flex: 0 0 auto;
   font-size: 16px;
+  overflow: hidden;
+  overflow-wrap: break-word;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 2; // Определяем количество строк перед достижением многоточия
+
 }
 
 .tag {
+  flex: 0 0 auto;
   font-size: 12px;
   color: var.$text-secondary;
 
@@ -53,12 +68,32 @@
   }
 }
 
+@container (max-width:100px) {
+  .label {
+    font-size: 14px;
+  }
+
+  .tag {
+    display: none;
+    grid-area: unset
+  }
+}
+
+@container (max-width:40px) {
+  .label{
+    -webkit-line-clamp: 4;
+  }
+  .time {
+    display: none;
+    grid-area: unset
+  }
+}
+
 @container (max-height:48px) {
   .content {
-    grid-template-rows: 1fr 1fr;
-    grid-template-areas: "time time" "label tag";
-    grid-template-columns: max-content 1fr;
-    column-gap: 10px;
+    grid-template-areas: 'time tag' 'label label';
+    grid-template-rows: auto auto;
+    grid-template-columns: auto auto;
   }
 
   .time {
@@ -66,21 +101,81 @@
   }
 
   .label {
-    font-size: 14px;
     grid-area: label;
   }
 
   .tag {
     grid-area: tag;
   }
+
+  @container (max-width:200px) {
+    .content {
+      grid-template-areas: unset;
+      grid-template-columns: 1fr;
+    }
+
+    .time {
+      grid-area: unset
+    }
+
+    .label {
+      font-size: 14px;
+      grid-area: unset;
+      -webkit-line-clamp: 1;
+    }
+
+    .tag {
+      display: none;
+      grid-area: unset;
+    }
+  }
+  @container (max-width:90px) {
+    .label {
+      -webkit-line-clamp: 3; // Определяем количество строк перед достижением многоточия
+    }
+
+    .time {
+      display: none;
+    }
+  }
 }
 
-
-@container  (max-height: 24px) {
+@container (max-height: 24px) {
   .content {
+    grid-template-areas: none;
+    grid-template-columns: repeat(3, auto);
     grid-template-rows: 1fr;
-    grid-template-columns: repeat(3, max-content);
-    grid-template-areas: 'time label tag';
-    align-items: center;
+    gap: 10px;
+    line-height: 1;
+  }
+
+  .time {
+    grid-area: unset;
+    font-size: 12px;
+  }
+
+  .label {
+    grid-area: unset;
+    font-size: 14px;
+    -webkit-line-clamp: 1; // Определяем количество строк перед достижением многоточия
+  }
+
+  .tag {
+    grid-area: unset;
+  }
+
+  @container (max-width:300px) {
+    .tag {
+      display: none;
+    }
+  }
+  @container (max-width:200px) {
+    .content {
+      display: block;
+    }
+
+    .time {
+      display: none;
+    }
   }
 }

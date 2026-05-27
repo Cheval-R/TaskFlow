@@ -29,6 +29,8 @@
 
     --opacity-color: #00000000;
 
+    --quarter-size: 24px;
     --half-size: 48px;
+    --three-quarters-size: 62px;
     --hour-size: 96px;
 }

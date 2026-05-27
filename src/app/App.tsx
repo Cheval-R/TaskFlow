@@ -18,7 +18,7 @@ function App() {
       label: 'Morning Routine',
       description: 'desc',
       tagValue: 'personal',
-      timeRange: [dayjs('1:00', 'HH:mm'), dayjs('2:00', 'HH:mm')],
+      timeRange: [dayjs('0:45', 'HH:mm'), dayjs('1:45', 'HH:mm')],
       date: dayjs(),
     },
     {
@@ -34,15 +34,15 @@ function App() {
       label: 'Day Routine',
       description: 'desc',
       tagValue: 'business',
-      timeRange: [dayjs('1:15', 'HH:mm'), dayjs('3:00', 'HH:mm')],
+      timeRange: [dayjs('2:30', 'HH:mm'), dayjs('3:15', 'HH:mm')],
       date: dayjs(),
     },
     {
       id: '4',
-      label: 'Routine',
+      label: 'RoutineRoutine Routine ',
       description: 'desc',
       tagValue: 'health',
-      timeRange: [dayjs('1:00', 'HH:mm'), dayjs('2:30', 'HH:mm')],
+      timeRange: [dayjs('3:15', 'HH:mm'), dayjs('3:45', 'HH:mm')],
       date: dayjs(),
     },
     {
@@ -50,7 +50,7 @@ function App() {
       label: 'Night',
       description: 'desc',
       tagValue: 'work',
-      timeRange: [dayjs('2:30', 'HH:mm'), dayjs('3:30', 'HH:mm')],
+      timeRange: [dayjs('3:45', 'HH:mm'), dayjs('4:00', 'HH:mm')],
       date: dayjs(),
     },
     {
@@ -58,7 +58,7 @@ function App() {
       label: '111Morning Routine111',
       description: '111desc111',
       tagValue: 'personal',
-      timeRange: [dayjs('11:00', 'HH:mm'), dayjs('12:00', 'HH:mm')],
+      timeRange: [dayjs('1:00', 'HH:mm'), dayjs('5:00', 'HH:mm')],
       date: dayjs(),
     },
     {

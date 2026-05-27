@@ -50,6 +50,7 @@ export const CreateTaskModal = ({
   onSubmitHandler,
   id,
 }: Props) => {
+  console.log(yCoordinate)
   function createDefaultInitialValues() {
     return {
       timeRange: [
@@ -97,7 +98,10 @@ export const CreateTaskModal = ({
         <Typography.Title level={4}>Create Task</Typography.Title>
         <Form.Item
           name={'label'}
-          rules={[{ required: true, message: 'Required field' }]}
+          rules={[
+            { required: true, message: 'Required field' },
+            { max: 35, message: 'Максимум 35 символов' },
+          ]}
         >
           <Input size={'large'} placeholder="Task title" />
         </Form.Item>
