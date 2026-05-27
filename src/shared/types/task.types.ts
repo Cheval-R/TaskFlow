@@ -9,3 +9,10 @@ export interface ITask {
   date: Dayjs
   timeRange: [Dayjs, Dayjs]
 }
+
+export type ITasksCounters = {
+  total: number
+  today: number
+  week: number
+  month: number
+}

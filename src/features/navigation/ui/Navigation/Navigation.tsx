@@ -8,16 +8,18 @@ import {
   MonthlyCalendarIcon,
 } from '@/assets/icons'
 
-interface Props {}
+interface Props {
+  tasksCounters: { total: number; today: number; week: number; month: number }
+}
 
-export const Navigation = ({}: Props) => {
+export const Navigation = ({ tasksCounters }: Props) => {
   return (
     <nav className={ss.navigation}>
       <ul className={ss.list}>
         <li className={ss.item}>
           <SidebarItem
             icon={<TotalIcon />}
-            count={12}
+            count={tasksCounters.total}
             active={false}
             onClick={() => console.log('click')}
           >
@@ -27,17 +29,17 @@ export const Navigation = ({}: Props) => {
         <li className={ss.item}>
           <SidebarItem
             icon={<DayCalendarIcon />}
-            count={4}
+            count={tasksCounters.today}
             active={false}
             onClick={() => console.log('click')}
           >
-            Day
+            Today
           </SidebarItem>
         </li>
         <li className={ss.item}>
           <SidebarItem
             icon={<WeeklyCalendarIcon />}
-            count={12}
+            count={tasksCounters.week}
             active={true}
             onClick={() => console.log('click')}
           >
@@ -47,7 +49,7 @@ export const Navigation = ({}: Props) => {
         <li className={ss.item}>
           <SidebarItem
             icon={<MonthlyCalendarIcon />}
-            count={12}
+            count={tasksCounters.month}
             active={false}
             onClick={() => console.log('click')}
           >
@@ -57,7 +59,6 @@ export const Navigation = ({}: Props) => {
         <li className={ss.item}>
           <SidebarItem
             icon={<AnalyticIcon />}
-            count={12}
             active={false}
             onClick={() => console.log('click')}
           >

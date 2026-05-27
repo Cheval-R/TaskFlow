@@ -10,9 +10,11 @@ import {
 import useTasks from '@/entities/task/model/useTasks.ts'
 import useStyleTokens from '@/shared/libs/useStyleTokens.ts'
 import getTasksLayout from '@/entities/task/model/getTasksLayout.ts'
-import type { ITaskLayout } from '@/entities/task/model/types.ts'
+import type { Dayjs } from 'dayjs'
 
-interface Props {}
+interface Props {
+  date: Dayjs
+}
 
 export const Day = ({}: Props) => {
   const tasks = useTasksContext()
@@ -49,7 +51,6 @@ export const Day = ({}: Props) => {
 
   const tasksWithLayout = useMemo(() => {
     if (workspaceWidth === 0) return []
-    console.log(workspaceWidth)
     return getTasksLayout(tasks, workspaceWidth)
   }, [tasks, workspaceWidth])
 

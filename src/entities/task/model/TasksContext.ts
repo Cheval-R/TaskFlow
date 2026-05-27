@@ -12,6 +12,7 @@ export const useTasksContext = () => {
   if (tasks === null) throw Error('Tasks out of context')
   return tasks
 }
+
 export const useTasksDispatchContext = () => {
   const tasksDispatch = useContext(TasksDispatchContext)
   if (tasksDispatch === null) throw Error('TasksDispatch out of context')
