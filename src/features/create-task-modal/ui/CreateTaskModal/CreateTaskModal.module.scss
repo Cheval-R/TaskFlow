@@ -1,17 +1,41 @@
 @use 'var';
 
 .form {
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: 350px;
   z-index: 100;
-  border-radius: var.$radius-md;
+
   border: 1px solid var.$border-subtle;
   background-color: var.$bg-secondary;
   padding: 10px;
+
+  visibility: hidden;
+  opacity: 0;
+  transform: translateX(100%);
+
+  transition: all 0.3s ease-in-out;
+  z-index: 1000;
+}
+
+.isOpen {
+  visibility: visible;
+  opacity: 1;
+  transform: translateX(0);
 }
 
 .dateTimeWrapper {
   display: flex;
   gap: var.$gap;
   align-items: center;
+}
+
+.tagsGroup {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  row-gap: 5px;
 }
 
 :global(.ant-picker-dropdown .ant-picker-panel-container) {

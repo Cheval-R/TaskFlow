@@ -1,7 +1,7 @@
 import ss from './Tags.module.scss'
-import tags from '../../model/tags.ts'
 import SidebarItem from '@/shared/ui/SidebarItem'
 import { Tag } from '@/shared/ui/Tag/Tag.tsx'
+import { useTagsContext } from '@/entities/tag/model/TagsContext.ts'
 
 interface Props {
   tags: {
@@ -12,13 +12,13 @@ interface Props {
 }
 
 export const Tags = ({}: Props) => {
+  const tags = useTagsContext()
   return (
     <div className={ss.tags}>
       <ul className={ss.list}>
         {tags.map((tag) => (
           <li className="item" key={tag.value}>
             <SidebarItem
-              count={tag.taskCount}
               active={false}
               onClick={() => console.log('click')}
               color={tag.color}

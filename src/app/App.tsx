@@ -10,9 +10,16 @@ import {
 } from '../entities/task/model/TasksContext'
 import { tasksReducer } from '@/entities/task/model/tasksReducer.ts'
 import dayjs from 'dayjs'
+import {
+  TagsContext,
+  TagsDispatchContext,
+} from '@/entities/tag/model/TagsContext.ts'
+import { tagsReducer } from '@/entities/tag/model/tagsReducer.ts'
+import { CreateTaskModalContext } from '@/features/create-task-modal/model/createTaskModalContext.ts'
+import { useCreateTaskModal } from '@/features/create-task-modal/model/useCreateTaskModal.ts'
 
 function App() {
-  const [tasks, dispatch] = useReducer(tasksReducer, [
+  const [tasks, tasksDispatch] = useReducer(tasksReducer, [
     {
       id: '1',
       label: 'Morning Routine',
@@ -94,18 +101,47 @@ function App() {
       date: dayjs(),
     },
   ])
+  const [tags, tagsDispatch] = useReducer(tagsReducer, [
+    { label: 'Work', value: 'work', color: '#306DEB' },
+    { label: 'Personal', value: 'personal', color: '#60B462' },
+    { label: 'Business', value: 'business', color: '#9771e8' },
+    { label: 'Health', value: 'health', color: '#ed995a' },
+    { label: 'Study', value: 'study', color: '#f1ca51' },
+  ])
+
+  const {
+    closeCreateTaskModal,
+    openCreateTaskModal,
+    isCreateModalOpen,
+    toggleCreateTaskModal,
+    createTaskFormValues,
+  } = useCreateTaskModal()
   return (
     <ConfigProvider theme={antdTheme}>
-      <TasksContext value={tasks}>
-        <TasksDispatchContext value={dispatch}>
-          <Routes>
-            <Route path="/" element={<Layout />}>
-              <Route path="" element={<Day />} />
-              <Route path="day" element={<Day />} />
-            </Route>
-          </Routes>
-        </TasksDispatchContext>
-      </TasksContext>
+      <CreateTaskModalContext
+        value={{
+          closeCreateTaskModal,
+          openCreateTaskModal,
+          isCreateModalOpen,
+          toggleCreateTaskModal,
+          values: createTaskFormValues,
+        }}
+      >
+        <TagsContext value={tags}>
+          <TagsDispatchContext value={tagsDispatch}>
+            <TasksContext value={tasks}>
+              <TasksDispatchContext value={tasksDispatch}>
+                <Routes>
+                  <Route path="/" element={<Layout />}>
+                    <Route path="" element={<Day date={dayjs()} />} />
+                    <Route path="day" element={<Day date={dayjs()} />} />
+                  </Route>
+                </Routes>
+              </TasksDispatchContext>
+            </TasksContext>
+          </TagsDispatchContext>
+        </TagsContext>
+      </CreateTaskModalContext>
     </ConfigProvider>
   )
 }

@@ -1,5 +1,4 @@
 import ss from './CreateTaskModal.module.scss'
-import tags from '../../../../entities/tag/model/tags.ts'
 import {
   Button,
   DatePicker,
@@ -11,65 +10,42 @@ import {
   type TimeRangePickerProps,
   Typography,
 } from 'antd'
-import { useState } from 'react'
-import dayjs, { Dayjs } from 'dayjs'
+import { useState, useEffect } from 'react'
 import formatMinuteToTime from '@/shared/model/formatMinuteToTime'
 import Tag from '@/shared/ui/Tag'
-import {
-  convertMinutesToTime,
-  convertPixelsToMinutes,
-} from '@/shared/model/timeConvert.ts'
 import type { ITask } from '@/shared/types/task.types.ts'
+import { useTagsContext } from '@/entities/tag/model/TagsContext.ts'
+import { useCreateTaskModalContext } from '@/features/create-task-modal/model/createTaskModalContext.ts'
+import dayjs, { type Dayjs } from 'dayjs'
+import {
+  useTasksContext,
+  useTasksDispatchContext,
+} from '@/entities/task/model/TasksContext.ts'
+import useTasks from '@/entities/task/model/useTasks.ts'
+import createTaskModal from '@/features/create-task-modal/ui/CreateTaskModal/index.ts'
 
 interface Props {
-  yCoordinate: number
-  toClose: () => void
-  name: string
-  initialValues?: ITask
-  id?: string
-  onSubmitHandler: (e: ITask) => void
-}
-
-export interface ICreateTaskForm {
   label: string
   description: string
+  tagValue?: string
   date: Dayjs
   timeRange: [Dayjs, Dayjs]
-  tagValue: string
+  id?: string
 }
 
-function convertMinutesToDayjs(minutes: number) {
-  return dayjs(convertMinutesToTime(convertPixelsToMinutes(minutes)), 'HH:mm')
-}
-
-export const CreateTaskModal = ({
-  yCoordinate,
-  toClose,
-  name,
-  initialValues,
-  onSubmitHandler,
-  id,
-}: Props) => {
-  console.log(yCoordinate)
-  function createDefaultInitialValues() {
-    return {
-      timeRange: [
-        convertMinutesToDayjs(yCoordinate),
-        convertMinutesToDayjs(yCoordinate).add(60, 'minute'),
-      ],
-      label: '',
-      description: '',
-      date: '',
-      tagValue: '',
-    }
-  }
-
-  const initialFormValues = initialValues
-    ? initialValues
-    : createDefaultInitialValues()
-
+export const CreateTaskModal = ({}: Props) => {
   const [timeDifference, setTimeDifference] = useState<string>('01:00')
+  const tags = useTagsContext()
+  const { isCreateModalOpen, closeCreateTaskModal, values } =
+    useCreateTaskModalContext()
+  const { addTaskHandler, updateTaskHandler } = useTasks()
 
+  const [form] = Form.useForm<ITask>()
+  useEffect(() => {
+    if (isCreateModalOpen) {
+      form.setFieldsValue(values)
+    }
+  }, [isCreateModalOpen])
   const onCalendarChangeHandler: TimeRangePickerProps['onChange'] = (
     time,
     timeString,
@@ -84,15 +60,18 @@ export const CreateTaskModal = ({
 
   return (
     <Form<ITask>
-      name={name}
+      form={form}
       onFinish={(e: ITask) => {
-        onSubmitHandler({ ...e, id: id ? id : crypto.randomUUID() })
-        toClose()
+        if (values.id === undefined)
+          addTaskHandler({ ...e, id: crypto.randomUUID() })
+        else {
+          updateTaskHandler({ ...e, id: values.id })
+        }
+        closeCreateTaskModal()
       }}
       layout={'vertical'}
-      className={ss.form}
-      style={{ position: 'absolute', top: yCoordinate + 10, left: '125px' }}
-      initialValues={initialFormValues}
+      className={`${ss.form} ${isCreateModalOpen ? ss.isOpen : ''}`}
+      initialValues={{ ...values }}
     >
       <Flex gap={'medium'} vertical>
         <Typography.Title level={4}>Create Task</Typography.Title>
@@ -111,7 +90,7 @@ export const CreateTaskModal = ({
         >
           <Input size={'large'} placeholder="Description" />
         </Form.Item>
-        <Flex gap={'medium'}>
+        <Flex gap={'medium'} wrap={'wrap'}>
           <Form.Item
             name={'date'}
             rules={[{ required: true, message: 'Required field' }]}
@@ -126,7 +105,6 @@ export const CreateTaskModal = ({
 
           <Form.Item
             name={'timeRange'}
-            // initialValue={[initialStartTime, initialEndTime]}
             rules={[{ required: true, message: 'Required field' }]}
           >
             <TimePicker.RangePicker
@@ -142,19 +120,17 @@ export const CreateTaskModal = ({
         </Flex>
 
         <Form.Item name={'tagValue'} label={'Tags'}>
-          <Flex gap={'medium'}>
-            <Radio.Group>
-              {tags.map((tag) => (
-                <Radio.Button
-                  key={tag.value}
-                  value={tag.value}
-                  className={ss.radioButton}
-                >
-                  <Tag color={tag.color}>{tag.label}</Tag>
-                </Radio.Button>
-              ))}
-            </Radio.Group>
-          </Flex>
+          <Radio.Group className={ss.tagsGroup}>
+            {tags.map((tag) => (
+              <Radio.Button
+                key={tag.value}
+                value={tag.value}
+                className={ss.radioButton}
+              >
+                <Tag color={tag.color}>{tag.label}</Tag>
+              </Radio.Button>
+            ))}
+          </Radio.Group>
         </Form.Item>
 
         <Flex justify={'space-between'}>
@@ -163,7 +139,11 @@ export const CreateTaskModal = ({
               Create Task
             </Button>
           </Form.Item>
-          <Button danger={true} onClick={toClose} htmlType={'button'}>
+          <Button
+            danger={true}
+            onClick={closeCreateTaskModal}
+            htmlType={'button'}
+          >
             Cancel
           </Button>
         </Flex>

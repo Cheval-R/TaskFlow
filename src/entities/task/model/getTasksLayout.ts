@@ -35,7 +35,6 @@ function groupingTasks(tasks: ITask[], wrapperWidth: number): ITaskLayout[] {
       tasksGroup.push(task)
       groupEnd = Math.max(groupEnd, getMinutesFromStartOfDay(task.timeRange[1]))
     } else {
-      // расскладываем текущую группу на колонки и начинаем новую
       returnedTasks = [
         ...returnedTasks,
         ...sortTaskGroupByColumns(tasksGroup, wrapperWidth),

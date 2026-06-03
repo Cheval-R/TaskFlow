@@ -10,6 +10,7 @@ import { useCreateTaskModal } from '@/features/create-task-modal/model/useCreate
 import useTasks from '@/entities/task/model/useTasks.ts'
 import dayjs from 'dayjs'
 import type { ITaskLayout } from '@/entities/task/model/types.ts'
+import { useCreateTaskModalContext } from '@/features/create-task-modal/model/createTaskModalContext.ts'
 
 interface Props {
   task: ITaskLayout
@@ -30,13 +31,8 @@ export const Task = ({ task }: Props) => {
 
   const taskDuration = endTime.diff(startTime, 'minute')
   const taskHeight = convertMinutesToPixel(taskDuration)
-  const {
-    closeCreateTaskModal,
-    openCreateTaskModal,
-    isCreateModalOpen,
-    toggleCreateTaskModal,
-  } = useCreateTaskModal()
-  const { updateTaskHandler, deleteTaskHandler } = useTasks()
+  const { openCreateTaskModal } = useCreateTaskModalContext()
+  const { deleteTaskHandler } = useTasks()
   return (
     <>
       <div
@@ -44,7 +40,7 @@ export const Task = ({ task }: Props) => {
           deleteTaskHandler(e.currentTarget.id)
         }}
         onDoubleClick={(e) => {
-          openCreateTaskModal()
+          openCreateTaskModal({ ...task })
         }}
         id={task.id}
         className={`${ss.task}`}
@@ -69,16 +65,6 @@ export const Task = ({ task }: Props) => {
           </div>
         </div>
       </div>
-      {!isCreateModalOpen ? null : (
-        <CreateTaskModal
-          id={task.id}
-          name={'updateTaskForm'}
-          yCoordinate={startPosition}
-          toClose={closeCreateTaskModal}
-          initialValues={task}
-          onSubmitHandler={updateTaskHandler}
-        />
-      )}
     </>
   )
 }

@@ -6,48 +6,23 @@ import Navigation from '@/features/navigation/ui/Navigation'
 import Tags from '../../entities/tag/ui/Tags'
 import PlusIcon from '@/assets/icons/plus.svg?react'
 import { Button as AntButton } from 'antd'
-import { PlusOutlined } from '@ant-design/icons'
-import { useContext, useEffect, useState } from 'react'
-import { useTasksContext } from '@/entities/task/model/TasksContext.ts'
-import type { ITask, ITasksCounters } from '@/shared/types/task.types.ts'
+import { useContext, useEffect, useReducer, useState } from 'react'
 import dayjs from 'dayjs'
+import { useTasksCounters } from '@/entities/task/model/useTasksCounters.ts'
+import {
+  useTasksContext,
+  useTasksDispatchContext,
+} from '@/entities/task/model/TasksContext.ts'
+import useTasks from '@/entities/task/model/useTasks.ts'
+import { useCreateTaskModal } from '@/features/create-task-modal/model/useCreateTaskModal.ts'
+import { useCreateTaskModalContext } from '@/features/create-task-modal/model/createTaskModalContext.ts'
 
 interface Props {}
 
-function getNumberOfTasks(tasks: ITask[]): ITasksCounters {
-  let today = 0
-  let week = 0
-  let month = 0
-  const total = tasks.length
-  for (let task of tasks) {
-    if (task.date.isSame(dayjs(), 'day')) {
-      today++
-    }
-    if (task.date.isSame(dayjs(), 'week')) {
-      week++
-    }
-    if (task.date.isSame(dayjs(), 'month')) {
-      month++
-    }
-  }
-  return { total, today, week, month }
-}
-
 export const Aside = ({}: Props) => {
-  const tasks = useTasksContext()
-  const [tasksCounters, setTasksCounters] = useState<ITasksCounters>({
-    total: 0,
-    today: 0,
-    week: 0,
-    month: 0,
-  })
-  useEffect(() => {
-    setTasksCounters((prevState) => ({
-      ...prevState,
-      ...getNumberOfTasks(tasks),
-    }))
-  }, [tasks])
+  const tasksCounters = useTasksCounters()
   const [iconAnimated, setIconAnimated] = useState(false)
+  const { openCreateTaskModal } = useCreateTaskModalContext()
   return (
     <aside className={ss.aside}>
       <Logo className={ss.logo} />
@@ -65,6 +40,10 @@ export const Aside = ({}: Props) => {
           iconPlacement={'start'}
           onClick={() => {
             setIconAnimated((prev) => !prev)
+            openCreateTaskModal({
+              date: dayjs(),
+              timeRange: [dayjs(), dayjs().add(30, 'minutes')],
+            })
           }}
         >
           Add Task

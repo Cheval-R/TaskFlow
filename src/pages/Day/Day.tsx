@@ -11,26 +11,25 @@ import useTasks from '@/entities/task/model/useTasks.ts'
 import useStyleTokens from '@/shared/libs/useStyleTokens.ts'
 import getTasksLayout from '@/entities/task/model/getTasksLayout.ts'
 import type { Dayjs } from 'dayjs'
+import dayjs from 'dayjs'
+import { useCreateTaskModalContext } from '@/features/create-task-modal/model/createTaskModalContext.ts'
+import {
+  convertMinutesToDayjs,
+  convertPixelsToMinutes,
+} from '@/shared/model/timeConvert.ts'
 
 interface Props {
   date: Dayjs
 }
 
-export const Day = ({}: Props) => {
+export const Day = ({ date }: Props) => {
   const tasks = useTasksContext()
   const { halfSize } = useStyleTokens()
-  const { addTaskHandler, deleteTaskHandler, updateTaskHandler } = useTasks()
   const workspaceRef = useRef<HTMLDivElement>(null)
   const [workspaceWidth, setWorkspaceWidth] = useState<number>(0)
-  const createTaskFormRef = useRef(null)
 
-  const {
-    isCreateModalOpen,
-    toggleCreateTaskModal,
-    openCreateTaskModal,
-    closeCreateTaskModal,
-  } = useCreateTaskModal()
-  const [clickCoordinateY, setClickCoordinateY] = useState<number>(0)
+  const { isCreateModalOpen, openCreateTaskModal, closeCreateTaskModal } =
+    useCreateTaskModalContext()
 
   useEffect(() => {
     const workspaceElement = workspaceRef.current
@@ -48,12 +47,13 @@ export const Day = ({}: Props) => {
       if (workspaceElement) observer.unobserve(workspaceElement)
     }
   }, [])
-
+  const tasksByDate = useMemo(() => {
+    return tasks.filter((task) => task.date.isSame(date, 'day'))
+  }, [tasks])
   const tasksWithLayout = useMemo(() => {
     if (workspaceWidth === 0) return []
-    return getTasksLayout(tasks, workspaceWidth)
+    return getTasksLayout(tasksByDate, workspaceWidth)
   }, [tasks, workspaceWidth])
-
   return (
     <div
       ref={workspaceRef}
@@ -72,25 +72,22 @@ export const Day = ({}: Props) => {
       }}
       onDoubleClick={(e) => {
         if (e.target === workspaceRef.current) {
-          console.log(halfSize)
           const startCoordinate =
             Math.floor(e.nativeEvent.offsetY / halfSize) * halfSize
-          setClickCoordinateY(startCoordinate)
-          openCreateTaskModal()
+          const timeStart = convertMinutesToDayjs(
+            convertPixelsToMinutes(startCoordinate),
+          )
+
+          openCreateTaskModal({
+            date: date,
+            timeRange: [timeStart, timeStart.add(30, 'minutes')],
+          })
         }
       }}
     >
       {tasksWithLayout.map((task) => {
         return <Task key={task.id} task={task} />
       })}
-      {isCreateModalOpen ? (
-        <CreateTaskModal
-          name={'createTaskForm'}
-          yCoordinate={clickCoordinateY}
-          toClose={closeCreateTaskModal}
-          onSubmitHandler={addTaskHandler}
-        />
-      ) : null}
     </div>
   )
 }
