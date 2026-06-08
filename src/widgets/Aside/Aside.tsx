@@ -6,16 +6,13 @@ import Navigation from '@/features/navigation/ui/Navigation'
 import Tags from '../../entities/tag/ui/Tags'
 import PlusIcon from '@/assets/icons/plus.svg?react'
 import { Button as AntButton } from 'antd'
-import { useContext, useEffect, useReducer, useState } from 'react'
+import { useState } from 'react'
 import dayjs from 'dayjs'
 import { useTasksCounters } from '@/entities/task/model/useTasksCounters.ts'
-import {
-  useTasksContext,
-  useTasksDispatchContext,
-} from '@/entities/task/model/TasksContext.ts'
-import useTasks from '@/entities/task/model/useTasks.ts'
-import { useCreateTaskModal } from '@/features/create-task-modal/model/useCreateTaskModal.ts'
 import { useCreateTaskModalContext } from '@/features/create-task-modal/model/createTaskModalContext.ts'
+import { useTagsContext } from '@/entities/tag/model/TagsContext.ts'
+import type { ITag } from '@/shared/types/tag.types.ts'
+import * as React from 'react'
 
 interface Props {}
 
@@ -23,9 +20,15 @@ export const Aside = ({}: Props) => {
   const tasksCounters = useTasksCounters()
   const [iconAnimated, setIconAnimated] = useState(false)
   const { openCreateTaskModal } = useCreateTaskModalContext()
+  const { tags, setActiveTag, activeTag } = useTagsContext()
+
+  const filterTasksByTag = (tag: ITag) => {
+    if (tag.value === activeTag) setActiveTag(null)
+    else setActiveTag(tag.value)
+  }
   return (
     <aside className={ss.aside}>
-      <Logo className={ss.logo} />
+      <Logo />
       <div className={ss.content}>
         <AntButton
           type={'primary'}
@@ -49,7 +52,7 @@ export const Aside = ({}: Props) => {
           Add Task
         </AntButton>
         <Navigation tasksCounters={tasksCounters} />
-        <Tags tags={[]} />
+        <Tags tags={tags} onClick={filterTasksByTag} />
         <p>CALENDAR</p>
       </div>
     </aside>

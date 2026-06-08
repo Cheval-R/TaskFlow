@@ -1,7 +1,6 @@
 import ss from './SidebarItem.module.scss'
 import type { ReactNode } from 'react'
-import { Badge, Button } from 'antd'
-import TagsMark from '../TagsMark'
+import { Button } from 'antd'
 
 interface Props {
   count?: number | null
@@ -20,7 +19,13 @@ export const SidebarItem = ({
   children,
 }: Props) => {
   return (
-    <Button className={ss.sidebarItem} size={'medium'} icon={icon} ghost>
+    <Button
+      className={ss.sidebarItem}
+      size={'medium'}
+      icon={icon}
+      ghost={!active}
+      onClick={onClick}
+    >
       <span className={ss.label}>{children}</span>
       <span className={ss.count}>{count}</span>
     </Button>

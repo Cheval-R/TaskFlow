@@ -1,8 +1,5 @@
 import { useState } from 'react'
-import type { ICreateTaskModalFormValues } from '@/features/create-task-modal/types/createTaskModal.types.ts'
 import dayjs, { type Dayjs } from 'dayjs'
-import Day from '@/pages/Day'
-import type { ITask } from '@/shared/types/task.types.ts'
 
 export function useCreateTaskModal() {
   const [createTaskFormValues, setCreateTaskFormValues] = useState<{
@@ -38,8 +35,8 @@ export function useCreateTaskModal() {
     label?: string
     description?: string
     tagValue?: string
-    date: Dayjs
-    timeRange: [Dayjs, Dayjs]
+    date?: Dayjs
+    timeRange?: [Dayjs, Dayjs]
     id?: string
   }) => {
     const formValues = {
@@ -47,12 +44,10 @@ export function useCreateTaskModal() {
       description: description || '',
       tagValue: tagValue || '',
       id: id || '',
-      date,
-      timeRange,
+      date: date || dayjs(),
+      timeRange: timeRange || [dayjs(), dayjs()],
     }
-    console.log(id)
     setCreateTaskFormValues(formValues)
-    console.log(createTaskFormValues)
     setIsCreateModalOpen(true)
   }
   const closeCreateTaskModal = () => {

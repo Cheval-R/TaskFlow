@@ -1,26 +1,20 @@
 import ss from './Task.module.scss'
-import { type CSSProperties, useState } from 'react'
+import { type CSSProperties } from 'react'
 import Tag from '@/shared/ui/Tag'
-import getTag from '@/shared/model/getTag.ts'
-import type { ITask } from '@/shared/types/task.types.ts'
+import useGetTag from '../../../tag/model/useGetTag.ts'
 import { convertMinutesToPixel } from '@/shared/model/timeConvert.ts'
-import { Form } from 'antd'
-import CreateTaskModal from '@/features/create-task-modal/ui/CreateTaskModal'
-import { useCreateTaskModal } from '@/features/create-task-modal/model/useCreateTaskModal.ts'
-import useTasks from '@/entities/task/model/useTasks.ts'
-import dayjs from 'dayjs'
 import type { ITaskLayout } from '@/entities/task/model/types.ts'
-import { useCreateTaskModalContext } from '@/features/create-task-modal/model/createTaskModalContext.ts'
+import type { ICreateTaskModalFormValues } from '@/features/create-task-modal/types/createTaskModal.types.ts'
 
 interface Props {
   task: ITaskLayout
+  onEdit: (taskValues: ICreateTaskModalFormValues) => void
+  onDelete: (id: string) => void
 }
 
-type CSSVars = CSSProperties & Record<`--${string}`, string | number>
-
-export const Task = ({ task }: Props) => {
+export const Task = ({ task, onEdit, onDelete }: Props) => {
   const { label, timeRange, tagValue } = task
-  const tag = getTag(tagValue)
+  const tag = useGetTag(tagValue)
 
   const startTime = timeRange[0]
   const endTime = timeRange[1]
@@ -31,16 +25,15 @@ export const Task = ({ task }: Props) => {
 
   const taskDuration = endTime.diff(startTime, 'minute')
   const taskHeight = convertMinutesToPixel(taskDuration)
-  const { openCreateTaskModal } = useCreateTaskModalContext()
-  const { deleteTaskHandler } = useTasks()
+
   return (
     <>
       <div
         onContextMenu={(e) => {
-          deleteTaskHandler(e.currentTarget.id)
+          onDelete(e.currentTarget.id)
         }}
-        onDoubleClick={(e) => {
-          openCreateTaskModal({ ...task })
+        onDoubleClick={() => {
+          onEdit({ ...task })
         }}
         id={task.id}
         className={`${ss.task}`}

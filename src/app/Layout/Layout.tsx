@@ -3,7 +3,6 @@ import ss from './Layout.module.scss'
 import WorkSpace from '@/widgets/WorkSpace'
 import CreateTaskModal from '@/features/create-task-modal/ui/CreateTaskModal'
 import { useCreateTaskModalContext } from '@/features/create-task-modal/model/createTaskModalContext.ts'
-import { useCreateTaskModal } from '@/features/create-task-modal/model/useCreateTaskModal.ts'
 
 export const Layout = () => {
   const { values } = useCreateTaskModalContext()
@@ -11,7 +10,7 @@ export const Layout = () => {
     <div className={ss.layout}>
       <Aside />
       <WorkSpace />
-      <CreateTaskModal {...values} />
+      <CreateTaskModal />
     </div>
   )
 }

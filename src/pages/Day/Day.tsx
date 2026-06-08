@@ -1,22 +1,17 @@
 import Task from '../../entities/task/ui/Task'
 import ss from './Day.module.scss'
-import { useCreateTaskModal } from '@/features/create-task-modal/model/useCreateTaskModal.ts'
-import CreateTaskModal from '@/features/create-task-modal/ui/CreateTaskModal'
 import { useEffect, useMemo, useRef, useState } from 'react'
-import {
-  useTasksContext,
-  useTasksDispatchContext,
-} from '@/entities/task/model/TasksContext.ts'
-import useTasks from '@/entities/task/model/useTasks.ts'
-import useStyleTokens from '@/shared/libs/useStyleTokens.ts'
+import { useTasksContext } from '@/entities/task/model/TasksContext.ts'
+import getStyleTokens from '../../shared/libs/getStyleTokens.ts'
 import getTasksLayout from '@/entities/task/model/getTasksLayout.ts'
 import type { Dayjs } from 'dayjs'
-import dayjs from 'dayjs'
 import { useCreateTaskModalContext } from '@/features/create-task-modal/model/createTaskModalContext.ts'
 import {
   convertMinutesToDayjs,
   convertPixelsToMinutes,
 } from '@/shared/model/timeConvert.ts'
+import useTasks from '@/entities/task/model/useTasks.ts'
+import { useTagsContext } from '@/entities/tag/model/TagsContext.ts'
 
 interface Props {
   date: Dayjs
@@ -24,12 +19,14 @@ interface Props {
 
 export const Day = ({ date }: Props) => {
   const tasks = useTasksContext()
-  const { halfSize } = useStyleTokens()
+  const { activeTag } = useTagsContext()
+  const { halfSize } = getStyleTokens()
   const workspaceRef = useRef<HTMLDivElement>(null)
   const [workspaceWidth, setWorkspaceWidth] = useState<number>(0)
 
   const { isCreateModalOpen, openCreateTaskModal, closeCreateTaskModal } =
     useCreateTaskModalContext()
+  const { deleteTaskHandler } = useTasks()
 
   useEffect(() => {
     const workspaceElement = workspaceRef.current
@@ -47,13 +44,20 @@ export const Day = ({ date }: Props) => {
       if (workspaceElement) observer.unobserve(workspaceElement)
     }
   }, [])
-  const tasksByDate = useMemo(() => {
-    return tasks.filter((task) => task.date.isSame(date, 'day'))
-  }, [tasks])
+
+  const filteredTasks = useMemo(() => {
+    return tasks.filter((task) => {
+      if (task.date.isSame(date, 'day')) {
+        if (!activeTag) return task
+        if (task.tagValue === activeTag) return task
+      }
+    })
+  }, [tasks, date, activeTag])
+
   const tasksWithLayout = useMemo(() => {
     if (workspaceWidth === 0) return []
-    return getTasksLayout(tasksByDate, workspaceWidth)
-  }, [tasks, workspaceWidth])
+    return getTasksLayout(filteredTasks, workspaceWidth)
+  }, [filteredTasks, workspaceWidth, activeTag])
   return (
     <div
       ref={workspaceRef}
@@ -86,7 +90,14 @@ export const Day = ({ date }: Props) => {
       }}
     >
       {tasksWithLayout.map((task) => {
-        return <Task key={task.id} task={task} />
+        return (
+          <Task
+            key={task.id}
+            task={task}
+            onDelete={deleteTaskHandler}
+            onEdit={(taskValues) => openCreateTaskModal(taskValues)}
+          />
+        )
       })}
     </div>
   )

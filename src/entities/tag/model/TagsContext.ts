@@ -1,8 +1,19 @@
-import { createContext, type Dispatch, useContext } from 'react'
+import {
+  createContext,
+  type Dispatch,
+  type SetStateAction,
+  useContext,
+} from 'react'
 import type { ITag } from '@/shared/types/tag.types.ts'
 import type { TActionTags } from '@/entities/tag/model/types.ts'
 
-export const TagsContext = createContext<null | ITag[]>(null)
+interface ITagsContext {
+  tags: ITag[]
+  activeTag: string | null
+  setActiveTag: Dispatch<SetStateAction<string | null>>
+}
+
+export const TagsContext = createContext<null | ITagsContext>(null)
 export const TagsDispatchContext = createContext<Dispatch<TActionTags> | null>(
   null,
 )

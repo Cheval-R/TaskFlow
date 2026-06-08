@@ -1,7 +1,8 @@
+import { useTagsContext } from '@/entities/tag/model/TagsContext.ts'
 import type { ITag } from '@/shared/types/tag.types.ts'
-import tags from '@/entities/tag/model/tags.ts'
 
-export default function getTag(tagValue: string): ITag {
+export default function useGetTag(tagValue: string): ITag {
+  const { tags } = useTagsContext()
   const tag = tags.find((tag) => {
     return tag.value === tagValue
   })

@@ -40,7 +40,7 @@ function groupingTasks(tasks: ITask[], wrapperWidth: number): ITaskLayout[] {
         ...sortTaskGroupByColumns(tasksGroup, wrapperWidth),
       ]
       tasksGroup = [task]
-      groupEnd = Math.max(groupEnd, getMinutesFromStartOfDay(task.timeRange[1]))
+      groupEnd = getMinutesFromStartOfDay(task.timeRange[1])
     }
   }
   returnedTasks = [
@@ -90,7 +90,7 @@ function calculateGroupColumnsWidth(
   const tasksGap = 10
   const columnWidth =
     (wrapperWidth - (columnCount + 1) * tasksGap) / columnCount
-  return groupedTasks.map((task, index) => {
+  return groupedTasks.map((task) => {
     const leftPosition =
       task.columnIndex * columnWidth + (task.columnIndex + 1) * tasksGap
     return { ...task, columnWidth, leftPosition }

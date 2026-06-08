@@ -2,7 +2,7 @@ function getStyle(prop: string) {
   const root = document.documentElement
   return getComputedStyle(root).getPropertyValue(prop).trim()
 }
-const useStyleTokens = () => {
+const getStyleTokens = () => {
   const blueColor = getStyle('--accent-blue')
   const purpleColor = getStyle('--accent-purple')
   const greenColor = getStyle('--accent-green')
@@ -44,4 +44,4 @@ const useStyleTokens = () => {
   }
 }
 
-export default useStyleTokens
+export default getStyleTokens

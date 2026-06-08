@@ -16,26 +16,11 @@ import Tag from '@/shared/ui/Tag'
 import type { ITask } from '@/shared/types/task.types.ts'
 import { useTagsContext } from '@/entities/tag/model/TagsContext.ts'
 import { useCreateTaskModalContext } from '@/features/create-task-modal/model/createTaskModalContext.ts'
-import dayjs, { type Dayjs } from 'dayjs'
-import {
-  useTasksContext,
-  useTasksDispatchContext,
-} from '@/entities/task/model/TasksContext.ts'
 import useTasks from '@/entities/task/model/useTasks.ts'
-import createTaskModal from '@/features/create-task-modal/ui/CreateTaskModal/index.ts'
 
-interface Props {
-  label: string
-  description: string
-  tagValue?: string
-  date: Dayjs
-  timeRange: [Dayjs, Dayjs]
-  id?: string
-}
-
-export const CreateTaskModal = ({}: Props) => {
+export const CreateTaskModal = () => {
   const [timeDifference, setTimeDifference] = useState<string>('01:00')
-  const tags = useTagsContext()
+  const { tags } = useTagsContext()
   const { isCreateModalOpen, closeCreateTaskModal, values } =
     useCreateTaskModalContext()
   const { addTaskHandler, updateTaskHandler } = useTasks()
@@ -45,11 +30,8 @@ export const CreateTaskModal = ({}: Props) => {
     if (isCreateModalOpen) {
       form.setFieldsValue(values)
     }
-  }, [isCreateModalOpen])
-  const onCalendarChangeHandler: TimeRangePickerProps['onChange'] = (
-    time,
-    timeString,
-  ) => {
+  }, [isCreateModalOpen, form, values])
+  const onCalendarChangeHandler: TimeRangePickerProps['onChange'] = (time) => {
     if (!time) return
     const startTime = time[0]
     const endTime = time[1]
@@ -62,8 +44,7 @@ export const CreateTaskModal = ({}: Props) => {
     <Form<ITask>
       form={form}
       onFinish={(e: ITask) => {
-        if (values.id === undefined)
-          addTaskHandler({ ...e, id: crypto.randomUUID() })
+        if (values.id === '') addTaskHandler({ ...e, id: crypto.randomUUID() })
         else {
           updateTaskHandler({ ...e, id: values.id })
         }
@@ -136,7 +117,7 @@ export const CreateTaskModal = ({}: Props) => {
         <Flex justify={'space-between'}>
           <Form.Item>
             <Button htmlType={'submit'} type={'primary'}>
-              Create Task
+              {values.id === '' ? 'Create' : 'Update'}
             </Button>
           </Form.Item>
           <Button

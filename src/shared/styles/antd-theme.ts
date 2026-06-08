@@ -1,4 +1,4 @@
-import useStyleTokens from '@/shared/libs/useStyleTokens.ts'
+import getStyleTokens from '../libs/getStyleTokens.ts'
 import type { ThemeConfig } from 'antd'
 
 const {
@@ -10,7 +10,7 @@ const {
   textSecondary,
   borderControl,
   opacityColor,
-} = useStyleTokens()
+} = getStyleTokens()
 
 const antdTheme: ThemeConfig = {
   token: {

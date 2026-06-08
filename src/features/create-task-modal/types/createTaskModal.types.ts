@@ -1,5 +1,4 @@
 import { Dayjs } from 'dayjs'
-import type { ITask } from '@/shared/types/task.types.ts'
 
 export interface ICreateTaskModalControls {
   closeCreateTaskModal: () => void
@@ -7,8 +6,8 @@ export interface ICreateTaskModalControls {
     label?: string
     description?: string
     tagValue?: string
-    date: Dayjs
-    timeRange: [Dayjs, Dayjs]
+    date?: Dayjs
+    timeRange?: [Dayjs, Dayjs]
     id?: string
   }) => void
   isCreateModalOpen: boolean
@@ -22,7 +21,6 @@ export interface ICreateTaskModalFormValues {
   tagValue?: string
   timeRange?: [Dayjs, Dayjs]
   id?: string
-  onSubmitHandler?: (e: ITask) => void
 }
 
 export interface ICreateTaskModalContext extends ICreateTaskModalControls {
@@ -31,6 +29,6 @@ export interface ICreateTaskModalContext extends ICreateTaskModalControls {
     description: string
     date: Dayjs
     timeRange: [Dayjs, Dayjs]
-    id?: string
+    id: string
   }
 }

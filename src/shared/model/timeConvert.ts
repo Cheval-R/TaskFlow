@@ -1,7 +1,6 @@
-import useStyleTokens from '@/shared/libs/useStyleTokens.ts'
 import dayjs from 'dayjs'
 
-const { hourSize } = useStyleTokens()
+const hourSize = 96
 
 export function convertMinutesToPixel(minutes: number) {
   return (minutes / 60) * hourSize

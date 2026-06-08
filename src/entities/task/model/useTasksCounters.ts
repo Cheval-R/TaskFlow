@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useMemo } from 'react'
 import { useTasksContext } from '@/entities/task/model/TasksContext.ts'
 import type { ITask, ITasksCounters } from '@/shared/types/task.types.ts'
 import dayjs from 'dayjs'
@@ -24,17 +24,8 @@ function getNumberOfTasks(tasks: ITask[]): ITasksCounters {
 
 export function useTasksCounters() {
   const tasks = useTasksContext()
-  const [tasksCounters, setTasksCounters] = useState<ITasksCounters>({
-    total: 0,
-    today: 0,
-    week: 0,
-    month: 0,
-  })
-  useEffect(() => {
-    setTasksCounters((prevState) => ({
-      ...prevState,
-      ...getNumberOfTasks(tasks),
-    }))
+  const taskCounters = useMemo(() => {
+    return getNumberOfTasks(tasks)
   }, [tasks])
-  return tasksCounters
+  return taskCounters
 }
