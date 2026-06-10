@@ -9,8 +9,8 @@ import type { TActionTags } from '@/entities/tag/model/types.ts'
 
 interface ITagsContext {
   tags: ITag[]
-  activeTag: string | null
-  setActiveTag: Dispatch<SetStateAction<string | null>>
+  activeTags: string[] | null
+  setActiveTags: Dispatch<SetStateAction<string[] | null>>
 }
 
 export const TagsContext = createContext<null | ITagsContext>(null)

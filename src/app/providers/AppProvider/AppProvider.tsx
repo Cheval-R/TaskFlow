@@ -23,7 +23,7 @@ interface Props {
 export const AppProvider = ({ children }: Props) => {
   const [tasks, tasksDispatch] = useReducer(tasksReducer, mockTasks)
   const [tags, tagsDispatch] = useReducer(tagsReducer, mockTags)
-  const [activeTag, setActiveTag] = useState<string | null>(null)
+  const [activeTag, setActiveTags] = useState<string[] | null>(null)
 
   const {
     closeCreateTaskModal,
@@ -43,7 +43,7 @@ export const AppProvider = ({ children }: Props) => {
           values: createTaskFormValues,
         }}
       >
-        <TagsContext value={{ tags, activeTag, setActiveTag }}>
+        <TagsContext value={{ tags, activeTags: activeTag, setActiveTags }}>
           <TagsDispatchContext value={tagsDispatch}>
             <TasksContext value={tasks}>
               <TasksDispatchContext value={tasksDispatch}>

@@ -19,7 +19,7 @@ interface Props {
 
 export const Day = ({ date }: Props) => {
   const tasks = useTasksContext()
-  const { activeTag } = useTagsContext()
+  const { activeTags } = useTagsContext()
   const { halfSize } = getStyleTokens()
   const workspaceRef = useRef<HTMLDivElement>(null)
   const [workspaceWidth, setWorkspaceWidth] = useState<number>(0)
@@ -48,16 +48,16 @@ export const Day = ({ date }: Props) => {
   const filteredTasks = useMemo(() => {
     return tasks.filter((task) => {
       if (task.date.isSame(date, 'day')) {
-        if (!activeTag) return task
-        if (task.tagValue === activeTag) return task
+        if (!activeTags) return task
+        if (activeTags.includes(task.tagValue)) return task
       }
     })
-  }, [tasks, date, activeTag])
+  }, [tasks, date, activeTags])
 
   const tasksWithLayout = useMemo(() => {
     if (workspaceWidth === 0) return []
     return getTasksLayout(filteredTasks, workspaceWidth)
-  }, [filteredTasks, workspaceWidth, activeTag])
+  }, [filteredTasks, workspaceWidth, activeTags])
   return (
     <div
       ref={workspaceRef}

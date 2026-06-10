@@ -20,11 +20,22 @@ export const Aside = ({}: Props) => {
   const tasksCounters = useTasksCounters()
   const [iconAnimated, setIconAnimated] = useState(false)
   const { openCreateTaskModal } = useCreateTaskModalContext()
-  const { tags, setActiveTag, activeTag } = useTagsContext()
+  const { tags, setActiveTags, activeTags } = useTagsContext()
 
   const filterTasksByTag = (tag: ITag) => {
-    if (tag.value === activeTag) setActiveTag(null)
-    else setActiveTag(tag.value)
+    if (!activeTags) {
+      setActiveTags([tag.value])
+      return
+    } else if (activeTags.includes(tag.value))
+      setActiveTags((prevState) => {
+        if (!prevState) return prevState
+        return prevState.filter((activeTag) => activeTag !== tag.value)
+      })
+    else
+      setActiveTags((prevState) => {
+        if (!prevState) return [tag.value]
+        return [...prevState, tag.value]
+      })
   }
   return (
     <aside className={ss.aside}>

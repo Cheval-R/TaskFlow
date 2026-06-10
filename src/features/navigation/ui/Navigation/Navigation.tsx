@@ -40,7 +40,7 @@ export const Navigation = ({ tasksCounters }: Props) => {
           <SidebarItem
             icon={<WeeklyCalendarIcon />}
             count={tasksCounters.week}
-            active={true}
+            active={false}
             onClick={() => console.log('click')}
           >
             Week

@@ -10,14 +10,15 @@ interface Props {
 }
 
 export const Tags = ({ tags, onClick }: Props) => {
-  const { activeTag } = useTagsContext()
+  const { activeTags } = useTagsContext()
+
   return (
     <div className={ss.tags}>
       <ul className={ss.list}>
         {tags.map((tag) => (
           <li className="item" key={tag.value}>
             <SidebarItem
-              active={activeTag === tag.value}
+              active={activeTags ? activeTags.includes(tag.value) : false}
               onClick={() => onClick(tag)}
               color={tag.color}
             >

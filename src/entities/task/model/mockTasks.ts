@@ -46,7 +46,7 @@ export const mockTasks: ITask[] = [
     id: '11111',
     label: '111Morning Routine111',
     description: '111desc111',
-    tagValue: 'personal',
+    tagValue: 'study',
     timeRange: [dayjs('1:00', 'HH:mm'), dayjs('5:00', 'HH:mm')],
     date: dayjs(),
   },
