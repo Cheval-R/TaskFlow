@@ -8,7 +8,7 @@ function App() {
   return (
     <AppProvider>
       <Routes>
-        <Route path="/" element={<Layout />}>
+        <Route path="/" element={<Layout date={dayjs()} />}>
           <Route path="" element={<Day date={dayjs()} />} />
           <Route path="day" element={<Day date={dayjs()} />} />
         </Route>
