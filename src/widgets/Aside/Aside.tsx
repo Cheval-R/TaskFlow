@@ -1,42 +1,36 @@
-import ss from './Aside.module.scss'
-import buttonStyle from '@/shared/ui/Button/Button.module.scss'
-import Logo from '@/shared/ui/Logo'
-
-import Navigation from '@/features/navigation/ui/Navigation'
-import Tags from '../../entities/tag/ui/Tags'
-import PlusIcon from '@/assets/icons/plus.svg?react'
-import { Button as AntButton } from 'antd'
-import { useState } from 'react'
-import dayjs from 'dayjs'
-import { useTasksCounters } from '@/entities/task/model/useTasksCounters.ts'
-import { useCreateTaskModalContext } from '@/features/create-task-modal/model/createTaskModalContext.ts'
-import { useTagsContext } from '@/entities/tag/model/TagsContext.ts'
-import type { ITag } from '@/shared/types/tag.types.ts'
-import * as React from 'react'
+import ss from './Aside.module.scss';
+import buttonStyle from '@/shared/ui/Button/Button.module.scss';
+import Logo from '@/shared/ui/Logo';
+import Navigation from '@/features/navigation/ui/Navigation';
+import Tags from '../../entities/tag/ui/Tags';
+import PlusIcon from '@/assets/icons/plus.svg?react';
+import { Button as AntButton } from 'antd';
+import { useState } from 'react';
+import dayjs from 'dayjs';
+import { useTasksCounters } from '@/entities/task/model/useTasksCounters.ts';
+import { useCreateTaskModalContext } from '@/features/create-task-modal/model/createTaskModalContext.ts';
+import { useTags } from '../../entities/tag/model/TagsContext.tsx';
+import type { ITag } from '@/shared/types/tag.types.ts';
+import useTagsActions from '@/entities/tag/model/useTasksActions.ts';
 
 interface Props {}
 
 export const Aside = ({}: Props) => {
-  const tasksCounters = useTasksCounters()
-  const [iconAnimated, setIconAnimated] = useState(false)
-  const { openCreateTaskModal } = useCreateTaskModalContext()
-  const { tags, setActiveTags, activeTags } = useTagsContext()
+  const tasksCounters = useTasksCounters();
+  const [iconAnimated, setIconAnimated] = useState(false);
+  const { openCreateTaskModal } = useCreateTaskModalContext();
+  const { activeTags } = useTags();
+  const { deleteActiveTagHandler, addActiveTagHandler } = useTagsActions();
 
   const filterTasksByTag = (tag: ITag) => {
     if (!activeTags) {
-      setActiveTags([tag.value])
-      return
-    } else if (activeTags.includes(tag.value))
-      setActiveTags((prevState) => {
-        if (!prevState) return prevState
-        return prevState.filter((activeTag) => activeTag !== tag.value)
-      })
-    else
-      setActiveTags((prevState) => {
-        if (!prevState) return [tag.value]
-        return [...prevState, tag.value]
-      })
-  }
+      addActiveTagHandler(tag.value);
+    } else if (activeTags.includes(tag.value)) {
+      deleteActiveTagHandler(tag.value);
+    } else {
+      addActiveTagHandler(tag.value);
+    }
+  };
   return (
     <aside className={ss.aside}>
       <Logo />
@@ -53,19 +47,19 @@ export const Aside = ({}: Props) => {
           }
           iconPlacement={'start'}
           onClick={() => {
-            setIconAnimated((prev) => !prev)
+            setIconAnimated((prev) => !prev);
             openCreateTaskModal({
               date: dayjs(),
               timeRange: [dayjs(), dayjs().add(30, 'minutes')],
-            })
+            });
           }}
         >
           Add Task
         </AntButton>
         <Navigation tasksCounters={tasksCounters} />
-        <Tags tags={tags} onClick={filterTasksByTag} />
+        <Tags onClick={filterTasksByTag} />
         <p>CALENDAR</p>
       </div>
     </aside>
-  )
-}
+  );
+};

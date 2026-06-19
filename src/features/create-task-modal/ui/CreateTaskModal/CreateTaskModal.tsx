@@ -14,16 +14,16 @@ import { useState, useEffect } from 'react'
 import formatMinuteToTime from '@/shared/model/formatMinuteToTime'
 import Tag from '@/shared/ui/Tag'
 import type { ITask } from '@/shared/types/task.types.ts'
-import { useTagsContext } from '@/entities/tag/model/TagsContext.ts'
+import { useTags } from '../../../../entities/tag/model/TagsContext.tsx'
 import { useCreateTaskModalContext } from '@/features/create-task-modal/model/createTaskModalContext.ts'
-import useTasks from '@/entities/task/model/useTasks.ts'
+import useTasksActions from '../../../../entities/task/model/useTasksActions.ts'
 
 export const CreateTaskModal = () => {
   const [timeDifference, setTimeDifference] = useState<string>('01:00')
-  const { tags } = useTagsContext()
+  const { tags } = useTags()
   const { isCreateModalOpen, closeCreateTaskModal, values } =
     useCreateTaskModalContext()
-  const { addTaskHandler, updateTaskHandler } = useTasks()
+  const { addTaskHandler, updateTaskHandler } = useTasksActions()
 
   const [form] = Form.useForm<ITask>()
   useEffect(() => {

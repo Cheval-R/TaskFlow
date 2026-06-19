@@ -1,5 +1,5 @@
 import { useMemo } from 'react'
-import { useTasksContext } from '@/entities/task/model/TasksContext.ts'
+import { useTasks } from './TasksContext.tsx'
 import type { ITask, ITasksCounters } from '@/shared/types/task.types.ts'
 import dayjs from 'dayjs'
 
@@ -23,7 +23,7 @@ function getNumberOfTasks(tasks: ITask[]): ITasksCounters {
 }
 
 export function useTasksCounters() {
-  const tasks = useTasksContext()
+  const { tasks } = useTasks()
   const taskCounters = useMemo(() => {
     return getNumberOfTasks(tasks)
   }, [tasks])

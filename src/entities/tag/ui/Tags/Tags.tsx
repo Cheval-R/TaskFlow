@@ -1,16 +1,16 @@
-import ss from './Tags.module.scss'
-import SidebarItem from '@/shared/ui/SidebarItem'
-import { Tag } from '@/shared/ui/Tag/Tag.tsx'
-import type { ITag } from '@/shared/types/tag.types.ts'
-import { useTagsContext } from '@/entities/tag/model/TagsContext.ts'
+import ss from './Tags.module.scss';
+import SidebarItem from '@/shared/ui/SidebarItem';
+import { Tag } from '@/shared/ui/Tag/Tag.tsx';
+import type { ITag } from '@/shared/types/tag.types.ts';
+import { useTags } from '@/entities/tag/model/TagsContext.tsx';
+import AddTaskForm from '@/features/AddTaskForm';
 
 interface Props {
-  tags: ITag[]
-  onClick: (tag: ITag) => void
+  onClick: (tag: ITag) => void;
 }
 
-export const Tags = ({ tags, onClick }: Props) => {
-  const { activeTags } = useTagsContext()
+export const Tags = ({ onClick }: Props) => {
+  const { activeTags, tags } = useTags();
 
   return (
     <div className={ss.tags}>
@@ -27,6 +27,7 @@ export const Tags = ({ tags, onClick }: Props) => {
           </li>
         ))}
       </ul>
+      <AddTaskForm />
     </div>
-  )
-}
+  );
+};

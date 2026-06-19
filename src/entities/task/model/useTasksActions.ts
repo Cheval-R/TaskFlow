@@ -1,9 +1,9 @@
 import type { ITask } from '@/shared/types/task.types.ts'
-import { useTasksDispatchContext } from '@/entities/task/model/TasksContext.ts'
+import { useTasks } from './TasksContext.tsx'
 import { ETasksActionPoints } from '@/entities/task/model/types.ts'
 
-export default function useTasks() {
-  const dispatch = useTasksDispatchContext()
+export default function useTasksActions() {
+  const { dispatch } = useTasks()
 
   const addTaskHandler = (task: ITask) => {
     dispatch({

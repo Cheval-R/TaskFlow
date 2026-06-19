@@ -36,7 +36,6 @@
   justify-content: flex-start;
   align-items: center;
   gap: 5px;
-  line-height: 1;
   -webkit-line-clamp: 2; // Определяем количество строк перед достижением многоточия
 
 }
@@ -146,7 +145,7 @@
     grid-template-columns: repeat(3, auto);
     grid-template-rows: 1fr;
     gap: 10px;
-    line-height: 1;
+
   }
 
   .time {
@@ -156,7 +155,7 @@
 
   .label {
     grid-area: unset;
-    font-size: 14px;
+    font-size: 13px;
     -webkit-line-clamp: 1; // Определяем количество строк перед достижением многоточия
   }
 

@@ -1,5 +1,5 @@
-import getStyleTokens from '../libs/getStyleTokens.ts'
-import type { ThemeConfig } from 'antd'
+import getStyleTokens from '../libs/getStyleTokens.ts';
+import type { ThemeConfig } from 'antd';
 
 const {
   blueColor,
@@ -10,7 +10,7 @@ const {
   textSecondary,
   borderControl,
   opacityColor,
-} = getStyleTokens()
+} = getStyleTokens();
 
 const antdTheme: ThemeConfig = {
   token: {
@@ -29,6 +29,8 @@ const antdTheme: ThemeConfig = {
   },
   components: {
     Button: {
+      // @ts-ignore - purpleShadowColor существует в рантайме, но пока нет в типах
+      purpleShadowColor: 'none',
       borderRadius: Number(
         String(radiusSM)
           .slice(0, radiusSM.length - 2)
@@ -61,6 +63,6 @@ const antdTheme: ThemeConfig = {
     },
     Radio: {},
   },
-}
+};
 
-export default antdTheme
+export default antdTheme;
