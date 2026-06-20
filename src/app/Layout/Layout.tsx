@@ -1,19 +1,14 @@
-import Aside from '@/widgets/Aside'
-import ss from './Layout.module.scss'
-import WorkSpace from '@/widgets/WorkSpace'
-import CreateTaskModal from '@/features/create-task-modal/ui/CreateTaskModal'
-import type { Dayjs } from 'dayjs'
+import Aside from '@/widgets/Aside';
+import ss from './Layout.module.scss';
+import WorkSpace from '../../entities/workspace/ui';
+import CreateTaskModal from '@/features/create-task-modal/ui/CreateTaskModal';
 
-interface Props {
-  date: Dayjs
-}
-
-export const Layout = ({ date }: Props) => {
+export const Layout = () => {
   return (
     <div className={ss.layout}>
       <Aside />
-      <WorkSpace date={date} />
+      <WorkSpace />
       <CreateTaskModal />
     </div>
-  )
-}
+  );
+};

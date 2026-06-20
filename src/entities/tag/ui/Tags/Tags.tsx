@@ -2,8 +2,9 @@ import ss from './Tags.module.scss';
 import SidebarItem from '@/shared/ui/SidebarItem';
 import { Tag } from '@/shared/ui/Tag/Tag.tsx';
 import type { ITag } from '@/shared/types/tag.types.ts';
-import { useTags } from '@/entities/tag/model/TagsContext.tsx';
+
 import AddTaskForm from '@/features/AddTaskForm';
+import { useTags } from '@/entities/tag/model/useTags.ts';
 
 interface Props {
   onClick: (tag: ITag) => void;

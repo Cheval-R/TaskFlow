@@ -1,27 +1,22 @@
-import type { ITask } from '@/shared/types/task.types.ts'
-import {
-  ETasksActionPoints,
-  type TActionTask,
-} from '@/entities/task/model/types.ts'
+import type { ITask } from '@/shared/types/task.types.ts';
+import { type TActionTask } from '@/entities/task/model/types.ts';
 
 export function tasksReducer(tasks: ITask[], action: TActionTask) {
   switch (action.type) {
-    case ETasksActionPoints.ADD_TASK:
-      return [...tasks, { ...action.payload }]
-    case ETasksActionPoints.DELETE_TASK:
-      return tasks.filter((task) => task.id !== action.payload.id)
-    case ETasksActionPoints.UPDATE_TASK: {
+    case 'ADD_TASK':
+      return [...tasks, { ...action.payload }];
+    case 'DELETE_TASK':
+      return tasks.filter((task) => task.id !== action.payload.id);
+    case 'UPDATE_TASK': {
       return tasks.map((task) => {
-        console.log(action.payload.id)
         if (task.id === action.payload.id) {
-          console.log('chage', task.id)
-          return action.payload
+          return action.payload;
         }
-        return task
-      })
+        return task;
+      });
     }
     default: {
-      return tasks
+      return tasks;
     }
   }
 }

@@ -1,15 +1,14 @@
 import ss from './AddTaskForm.module.scss';
-import useTagsActions from '@/entities/tag/model/useTasksActions.ts';
-import { useTags } from '@/entities/tag/model/TagsContext.tsx';
+
 import type { ITag } from '@/shared/types/tag.types.ts';
 import { Button, ColorPicker, Flex, Form, Input } from 'antd';
 import type { Color } from 'antd/es/color-picker';
+import { useTags } from '@/entities/tag/model/useTags.ts';
 interface Props {}
 
 export const AddTaskForm = ({}: Props) => {
-  const { addTagHandler } = useTagsActions();
   const [tagForm] = Form.useForm<ITag>();
-  const { activeTags, tags } = useTags();
+  const { activeTags, addTag } = useTags();
   return (
     <Form<ITag>
       form={tagForm}
@@ -19,7 +18,7 @@ export const AddTaskForm = ({}: Props) => {
           alert('Такой тег уже существует');
           return;
         }
-        addTagHandler({
+        addTag({
           value: values.label.toLocaleLowerCase(),
           label: values.label,
           color: values.color,

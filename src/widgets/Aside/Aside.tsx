@@ -9,9 +9,9 @@ import { useState } from 'react';
 import dayjs from 'dayjs';
 import { useTasksCounters } from '@/entities/task/model/useTasksCounters.ts';
 import { useCreateTaskModalContext } from '@/features/create-task-modal/model/createTaskModalContext.ts';
-import { useTags } from '../../entities/tag/model/TagsContext.tsx';
+
 import type { ITag } from '@/shared/types/tag.types.ts';
-import useTagsActions from '@/entities/tag/model/useTasksActions.ts';
+import { useTags } from '@/entities/tag/model/useTags.ts';
 
 interface Props {}
 
@@ -19,16 +19,18 @@ export const Aside = ({}: Props) => {
   const tasksCounters = useTasksCounters();
   const [iconAnimated, setIconAnimated] = useState(false);
   const { openCreateTaskModal } = useCreateTaskModalContext();
-  const { activeTags } = useTags();
-  const { deleteActiveTagHandler, addActiveTagHandler } = useTagsActions();
+  const {
+    activeTags,
+    actions: { deleteActiveTag, addActiveTag },
+  } = useTags();
 
   const filterTasksByTag = (tag: ITag) => {
     if (!activeTags) {
-      addActiveTagHandler(tag.value);
+      addActiveTag(tag.value);
     } else if (activeTags.includes(tag.value)) {
-      deleteActiveTagHandler(tag.value);
+      deleteActiveTag(tag.value);
     } else {
-      addActiveTagHandler(tag.value);
+      addActiveTag(tag.value);
     }
   };
   return (

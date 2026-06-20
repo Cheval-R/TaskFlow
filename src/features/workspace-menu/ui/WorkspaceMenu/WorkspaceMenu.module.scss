@@ -1,0 +1,61 @@
+@use 'var';
+
+.menu {
+  padding: 15px;
+  justify-content: space-between;
+  align-items: center;
+  display: flex;
+  background-color: var.$bg-primary;
+  position: sticky;
+}
+
+.navigation {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-right: 30px;
+}
+
+.infoHead {
+  margin-right: auto;
+
+  .day {
+    font-size: 18px;
+    margin-bottom: 5px;
+  }
+
+  .week {
+    font-size: 12px;
+    color: var.$text-secondary;
+  }
+}
+
+.showType {
+
+}
+
+.datepicker {;
+  position: relative;
+}
+
+.calendar {
+  height: 38px;
+  :global(.ant-picker-input) {
+    input {
+      display: none;
+    }
+  }
+
+  :global(.ant-picker-suffix) {
+    margin: unset;
+  }
+
+  //position: absolute;
+  //z-index: 999;
+  //width: 300px;
+  //
+  //:global(.ant-picker-cell:not(.ant-picker-cell-in-view) .ant-picker-cell-inner) {
+  //  color: #6b7280;
+  //}
+}
+

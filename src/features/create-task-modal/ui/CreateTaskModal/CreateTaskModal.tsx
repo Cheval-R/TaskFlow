@@ -1,4 +1,4 @@
-import ss from './CreateTaskModal.module.scss'
+import ss from './CreateTaskModal.module.scss';
 import {
   Button,
   DatePicker,
@@ -7,48 +7,51 @@ import {
   Input,
   Radio,
   TimePicker,
-  type TimeRangePickerProps,
   Typography,
-} from 'antd'
-import { useState, useEffect } from 'react'
-import formatMinuteToTime from '@/shared/model/formatMinuteToTime'
-import Tag from '@/shared/ui/Tag'
-import type { ITask } from '@/shared/types/task.types.ts'
-import { useTags } from '../../../../entities/tag/model/TagsContext.tsx'
-import { useCreateTaskModalContext } from '@/features/create-task-modal/model/createTaskModalContext.ts'
-import useTasksActions from '../../../../entities/task/model/useTasksActions.ts'
+} from 'antd';
+import type { TimeRangePickerProps } from 'antd';
+import { useState, useEffect } from 'react';
+import formatMinuteToTime from '@/shared/model/formatMinuteToTime';
+import Tag from '@/shared/ui/Tag';
+import type { ITask } from '@/shared/types/task.types.ts';
+
+import { useCreateTaskModalContext } from '@/features/create-task-modal/model/createTaskModalContext.ts';
+import { useTasks } from '@/entities/task/model/useTasks';
+import { useTags } from '@/entities/tag/model/useTags.ts';
 
 export const CreateTaskModal = () => {
-  const [timeDifference, setTimeDifference] = useState<string>('01:00')
-  const { tags } = useTags()
+  const [timeDifference, setTimeDifference] = useState<string>('01:00');
+  const { tags } = useTags();
   const { isCreateModalOpen, closeCreateTaskModal, values } =
-    useCreateTaskModalContext()
-  const { addTaskHandler, updateTaskHandler } = useTasksActions()
+    useCreateTaskModalContext();
+  const {
+    actions: { addTask, updateTask },
+  } = useTasks();
 
-  const [form] = Form.useForm<ITask>()
+  const [form] = Form.useForm<ITask>();
   useEffect(() => {
     if (isCreateModalOpen) {
-      form.setFieldsValue(values)
+      form.setFieldsValue(values);
     }
-  }, [isCreateModalOpen, form, values])
+  }, [isCreateModalOpen, form, values]);
   const onCalendarChangeHandler: TimeRangePickerProps['onChange'] = (time) => {
-    if (!time) return
-    const startTime = time[0]
-    const endTime = time[1]
-    if (!startTime || !endTime) return
-    const diff = endTime.diff(startTime, 'minutes')
-    setTimeDifference(formatMinuteToTime(diff))
-  }
+    if (!time) return;
+    const startTime = time[0];
+    const endTime = time[1];
+    if (!startTime || !endTime) return;
+    const diff = endTime.diff(startTime, 'minutes');
+    setTimeDifference(formatMinuteToTime(diff));
+  };
 
   return (
     <Form<ITask>
       form={form}
       onFinish={(e: ITask) => {
-        if (values.id === '') addTaskHandler({ ...e, id: crypto.randomUUID() })
+        if (values.id === '') addTask({ ...e, id: crypto.randomUUID() });
         else {
-          updateTaskHandler({ ...e, id: values.id })
+          updateTask({ ...e, id: values.id });
         }
-        closeCreateTaskModal()
+        closeCreateTaskModal();
       }}
       layout={'vertical'}
       className={`${ss.form} ${isCreateModalOpen ? ss.isOpen : ''}`}
@@ -130,5 +133,5 @@ export const CreateTaskModal = () => {
         </Flex>
       </Flex>
     </Form>
-  )
-}
+  );
+};
