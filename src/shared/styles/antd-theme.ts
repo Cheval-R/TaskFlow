@@ -62,6 +62,14 @@ const antdTheme: ThemeConfig = {
       titleMarginBottom: 0,
     },
     Radio: {},
+    Segmented: {
+      itemColor: textSecondary,
+      itemSelectedColor: textPrimary,
+      itemHoverColor: textPrimary,
+
+      trackBg: bgSecondary,
+      itemSelectedBg: bgPrimary,
+    },
   },
 };
 

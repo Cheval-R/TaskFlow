@@ -1,14 +1,14 @@
-import ss from './SidebarItem.module.scss'
-import type { ReactNode } from 'react'
-import { Button } from 'antd'
+import ss from './SidebarItem.module.scss';
+import type { ReactNode } from 'react';
+import { Button } from 'antd';
 
 interface Props {
-  count?: number | null
-  active?: boolean
-  color?: string
-  icon?: ReactNode
-  onClick: () => void
-  children: ReactNode
+  count?: number | null;
+  active?: boolean;
+  color?: string;
+  icon?: ReactNode;
+  onClick?: () => void;
+  children: ReactNode;
 }
 
 export const SidebarItem = ({
@@ -29,5 +29,5 @@ export const SidebarItem = ({
       <span className={ss.label}>{children}</span>
       <span className={ss.count}>{count}</span>
     </Button>
-  )
-}
+  );
+};

@@ -1,17 +1,15 @@
-import { Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import Layout from './Layout';
-import Day from '@/pages/Day';
-import dayjs from 'dayjs';
 import AppProvider from '@/app/providers/AppProvider';
-import { useWorkspace } from '@/entities/workspace/model/useWorkspace.ts';
+import Workspace from '@/entities/workspace/ui';
 
 function App() {
   return (
     <AppProvider>
       <Routes>
         <Route path="/" element={<Layout />}>
-          <Route path="" element={<Day />} />
-          <Route path="day" element={<Day />} />
+          <Route index element={<Navigate to={'/day'} replace />} />
+          <Route path={':workspaceType'} element={<Workspace />} />
         </Route>
       </Routes>
     </AppProvider>

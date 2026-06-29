@@ -8,12 +8,21 @@ interface Props {}
 
 export const AddTaskForm = ({}: Props) => {
   const [tagForm] = Form.useForm<ITag>();
-  const { activeTags, addTag } = useTags();
+  const {
+    tags,
+    actions: { addTag },
+  } = useTags();
   return (
     <Form<ITag>
       form={tagForm}
       onFinish={(values: ITag) => {
-        if (activeTags.includes(values.label.toLocaleLowerCase())) {
+        if (
+          tags.find(
+            (tag) =>
+              tag.value.trim().toLocaleLowerCase() ===
+              values.value.trim().toLocaleLowerCase(),
+          )
+        ) {
           // Узнать как сделать валидацию на наличие такого тега
           alert('Такой тег уже существует');
           return;

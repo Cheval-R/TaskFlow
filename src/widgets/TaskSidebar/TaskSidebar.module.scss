@@ -1,0 +1,30 @@
+@use 'var';
+
+.sidebar {
+  position: absolute;
+  right: 0;
+  top: 0;
+
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: column;
+  gap: 30px;
+
+  background-color: var.$bg-primary;
+  height: 100vh;
+
+  padding: 30px 15px 10px;
+  border: 1px solid var.$border-strong;
+  width: var.$sidebar-width;
+}
+
+.closeButton {
+  position: absolute;
+  top: 5px;
+  right: 10px;
+
+  svg {
+    width: 20px;
+    height: 20px;
+  }
+}

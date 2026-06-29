@@ -1,7 +1,8 @@
 import ss from './WorkSpace.module.scss';
-import { Outlet } from 'react-router';
 import TimeBar from '../../../widgets/TimeBar';
 import WorkspaceMenu from '../../../features/workspace-menu/ui/WorkspaceMenu';
+import { useWorkspaceType } from '@/entities/workspace/model/useWorkspaceType.ts';
+import getWorkspaceComponent from '@/entities/workspace/model/getWorkspaceComponent.tsx';
 
 export const Workspace = () => {
   return (
@@ -9,7 +10,7 @@ export const Workspace = () => {
       <WorkspaceMenu />
       <div className={ss.timeZone} data-time-zone>
         <TimeBar />
-        <Outlet />
+        {getWorkspaceComponent(useWorkspaceType())}
       </div>
     </div>
   );

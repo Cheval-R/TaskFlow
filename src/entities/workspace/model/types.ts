@@ -2,12 +2,16 @@ import type { Dayjs } from 'dayjs';
 import type { Dispatch } from 'react';
 
 export interface IWorkspaceState {
-  type: TWorkspaceType;
   date: Dayjs;
 }
 
 export interface IWorkspaceContext extends IWorkspaceState {
-  dispatch: Dispatch<TActionWorkspace>;
+  actions: {
+    toNextPeriod: () => void;
+    toPreviousPeriod: () => void;
+    toToday: () => void;
+    moveTo: (date: Dayjs) => void;
+  };
 }
 
 export type TWorkspaceType = 'day' | 'week' | 'month';

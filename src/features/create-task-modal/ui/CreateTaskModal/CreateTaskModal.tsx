@@ -39,6 +39,10 @@ export const CreateTaskModal = () => {
     const startTime = time[0];
     const endTime = time[1];
     if (!startTime || !endTime) return;
+
+    if (startTime.isSame(endTime)) {
+      endTime.add(15, 'minute');
+    }
     const diff = endTime.diff(startTime, 'minutes');
     setTimeDifference(formatMinuteToTime(diff));
   };
@@ -49,6 +53,10 @@ export const CreateTaskModal = () => {
       onFinish={(e: ITask) => {
         if (values.id === '') addTask({ ...e, id: crypto.randomUUID() });
         else {
+          if (e.timeRange[0].isSame(e.timeRange[1])) {
+            e.timeRange[1].add(15, 'minute');
+          }
+
           updateTask({ ...e, id: values.id });
         }
         closeCreateTaskModal();

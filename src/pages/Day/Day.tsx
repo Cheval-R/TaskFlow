@@ -11,6 +11,9 @@ import {
 } from '@/shared/model/timeConvert.ts';
 import { useTags } from '@/entities/tag/model/useTags.ts';
 import { useWorkspace } from '@/entities/workspace/model/useWorkspace.ts';
+import TaskSidebar from '@/widgets/TaskSidebar';
+import { Button } from 'antd';
+import { EditOutlined } from '@ant-design/icons';
 
 export const Day = () => {
   const { date } = useWorkspace();
@@ -46,9 +49,10 @@ export const Day = () => {
   const filteredTasks = useMemo(() => {
     return tasks.filter((task) => {
       if (task.date.isSame(date, 'day')) {
-        if (!activeTags || !activeTags.length) return task;
-        if (activeTags.includes(task.tagValue)) return task;
+        if (!activeTags || !activeTags.length) return true;
+        if (activeTags.includes(task.tagValue)) return true;
       }
+      return false;
     });
   }, [tasks, date, activeTags]);
 
@@ -57,46 +61,49 @@ export const Day = () => {
     return getTasksLayout(filteredTasks, workspaceWidth);
   }, [filteredTasks, workspaceWidth, activeTags]);
   return (
-    <div
-      ref={workspaceRef}
-      className={ss.dayWorkspace}
-      onClick={(e) => {
-        const target = e.target;
-        if (!(target instanceof Element)) return;
+    <>
+      <div
+        ref={workspaceRef}
+        className={ss.dayWorkspace}
+        onClick={(e) => {
+          const target = e.target;
+          if (!(target instanceof Element)) return;
 
-        if (
-          target.closest('[data-time-zone]') &&
-          isCreateModalOpen &&
-          !target.closest('#createTaskForm')
-        ) {
-          closeCreateTaskModal();
-        }
-      }}
-      onDoubleClick={(e) => {
-        if (e.target === workspaceRef.current) {
-          const startCoordinate =
-            Math.floor(e.nativeEvent.offsetY / halfSize) * halfSize;
-          const timeStart = convertMinutesToDayjs(
-            convertPixelsToMinutes(startCoordinate),
+          if (
+            target.closest('[data-time-zone]') &&
+            isCreateModalOpen &&
+            !target.closest('#createTaskForm')
+          ) {
+            closeCreateTaskModal();
+          }
+        }}
+        onDoubleClick={(e) => {
+          if (e.target === workspaceRef.current) {
+            const startCoordinate =
+              Math.floor(e.nativeEvent.offsetY / halfSize) * halfSize;
+            const timeStart = convertMinutesToDayjs(
+              convertPixelsToMinutes(startCoordinate),
+            );
+
+            openCreateTaskModal({
+              date: date,
+              timeRange: [timeStart, timeStart.add(30, 'minutes')],
+            });
+          }
+        }}
+      >
+        {tasksWithLayout.map((task) => {
+          return (
+            <Task
+              key={task.id}
+              task={task}
+              onDelete={deleteTask}
+              onEdit={(taskValues) => openCreateTaskModal(taskValues)}
+            />
           );
-
-          openCreateTaskModal({
-            date: date,
-            timeRange: [timeStart, timeStart.add(30, 'minutes')],
-          });
-        }
-      }}
-    >
-      {tasksWithLayout.map((task) => {
-        return (
-          <Task
-            key={task.id}
-            task={task}
-            onDelete={deleteTask}
-            onEdit={(taskValues) => openCreateTaskModal(taskValues)}
-          />
-        );
-      })}
-    </div>
+        })}
+      </div>
+      <TaskSidebar task={tasks[0]} />
+    </>
   );
 };
