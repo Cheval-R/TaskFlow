@@ -4,7 +4,6 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { useTasks } from '@/entities/task/model/useTasks.ts';
 import getStyleTokens from '@/shared/libs/getStyleTokens.ts';
 import getTasksLayout from '@/entities/task/model/getTasksLayout.ts';
-import { useCreateTaskModalContext } from '@/features/create-task-modal/model/createTaskModalContext.ts';
 import {
   convertMinutesToDayjs,
   convertPixelsToMinutes,
@@ -12,8 +11,7 @@ import {
 import { useTags } from '@/entities/tag/model/useTags.ts';
 import { useWorkspace } from '@/entities/workspace/model/useWorkspace.ts';
 import TaskSidebar from '@/widgets/TaskSidebar';
-import { Button } from 'antd';
-import { EditOutlined } from '@ant-design/icons';
+import { useCreateTaskModal } from '@/features/create-task-modal/model/useCreateTaskModal.ts';
 
 export const Day = () => {
   const { date } = useWorkspace();
@@ -27,7 +25,7 @@ export const Day = () => {
   const [workspaceWidth, setWorkspaceWidth] = useState<number>(0);
 
   const { isCreateModalOpen, openCreateTaskModal, closeCreateTaskModal } =
-    useCreateTaskModalContext();
+    useCreateTaskModal();
 
   useEffect(() => {
     const workspaceElement = workspaceRef.current;

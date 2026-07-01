@@ -7,6 +7,8 @@
   display: flex;
   background-color: var.$bg-primary;
   position: sticky;
+
+  background-image: repeating-linear-gradient(to bottom, var(--border-subtle), var(--border-subtle) 1px, transparent 1px, transparent var(--hour-size)), repeating-linear-gradient(to bottom, #232833, rgba(35, 40, 51, 0.74) 1px, transparent 1px, transparent var(--half-size));
 }
 
 .navigation {

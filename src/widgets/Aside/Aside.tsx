@@ -8,17 +8,17 @@ import { Button as AntButton } from 'antd';
 import { useState } from 'react';
 import dayjs from 'dayjs';
 import { useTasksCounters } from '@/entities/task/model/useTasksCounters.ts';
-import { useCreateTaskModalContext } from '@/features/create-task-modal/model/createTaskModalContext.ts';
 
 import type { ITag } from '@/shared/types/tag.types.ts';
 import { useTags } from '@/entities/tag/model/useTags.ts';
+import { useCreateTaskModal } from '@/features/create-task-modal/model/useCreateTaskModal.ts';
 
 interface Props {}
 
 export const Aside = ({}: Props) => {
   const tasksCounters = useTasksCounters();
   const [iconAnimated, setIconAnimated] = useState(false);
-  const { openCreateTaskModal } = useCreateTaskModalContext();
+  const { openCreateTaskModal } = useCreateTaskModal();
   const {
     activeTags,
     actions: { deleteActiveTag, addActiveTag },

@@ -1,28 +1,23 @@
-import { useState } from 'react'
-import dayjs, { type Dayjs } from 'dayjs'
+import { useContext } from 'react';
+import dayjs from 'dayjs';
+import { CreateTaskModalContext } from '@/features/create-task-modal/model/CreateTaskModalContext.tsx';
+import type { ITask } from '@/shared/types/task.types.ts';
 
 export function useCreateTaskModal() {
-  const [createTaskFormValues, setCreateTaskFormValues] = useState<{
-    label: string
-    description: string
-    date: Dayjs
-    timeRange: [Dayjs, Dayjs]
-    tagValue: string
-    id: string
-  }>({
-    label: '',
-    description: '',
-    date: dayjs(),
-    timeRange: [dayjs(), dayjs()],
-    tagValue: '',
-    id: crypto.randomUUID(),
-  })
+  const context = useContext(CreateTaskModalContext);
 
-  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false)
-
-  const toggleCreateTaskModal = () => {
-    setIsCreateModalOpen((prevState) => !prevState)
+  if (!context) {
+    throw Error('useCreateTaskModal должен использоваться внутри TaskProvider');
   }
+
+  const { isOpen, values, setter } = context;
+
+  const closeCreateTaskModal = () => {
+    setter((prevState) => ({
+      values: prevState.values,
+      isOpen: false,
+    }));
+  };
 
   const openCreateTaskModal = ({
     label,
@@ -31,14 +26,7 @@ export function useCreateTaskModal() {
     date,
     timeRange,
     id,
-  }: {
-    label?: string
-    description?: string
-    tagValue?: string
-    date?: Dayjs
-    timeRange?: [Dayjs, Dayjs]
-    id?: string
-  }) => {
+  }: Partial<ITask>) => {
     const formValues = {
       label: label || '',
       description: description || '',
@@ -46,18 +34,15 @@ export function useCreateTaskModal() {
       id: id || '',
       date: date || dayjs(),
       timeRange: timeRange || [dayjs(), dayjs()],
-    }
-    setCreateTaskFormValues(formValues)
-    setIsCreateModalOpen(true)
-  }
-  const closeCreateTaskModal = () => {
-    setIsCreateModalOpen(false)
-  }
+    };
+    setter({ values: formValues, isOpen: true });
+    console.log('asdasdadasdasd');
+  };
+
   return {
-    toggleCreateTaskModal,
     openCreateTaskModal,
     closeCreateTaskModal,
-    isCreateModalOpen,
-    createTaskFormValues,
-  }
+    isCreateModalOpen: isOpen,
+    createTaskFormValues: values,
+  };
 }

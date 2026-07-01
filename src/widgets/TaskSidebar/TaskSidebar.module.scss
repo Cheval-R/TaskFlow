@@ -18,6 +18,18 @@
   width: var.$sidebar-width;
 }
 
+.editButton {
+  opacity: 0%;
+  color: grey;
+  pointer-events: none;
+  transition: opacity 0.3s ease-in;
+
+  &:focus-visible {
+    opacity: 100%;
+    pointer-events: all;
+  }
+}
+
 .closeButton {
   position: absolute;
   top: 5px;

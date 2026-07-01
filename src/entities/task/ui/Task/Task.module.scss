@@ -8,6 +8,7 @@
   text-align: left;
   width: 80%;
   height: 50px;
+  min-height: 25px;
   padding: 5px 10px;
   //margin-left: 10px;
 
@@ -19,18 +20,24 @@
 
   background-color: color-mix(in srgb, var(--task-color) 45%, transparent);
 
-  cursor: pointer;
+  //cursor: pointer;
 
   transition: background-color var.$transition-slow ease-in;
 
   @media (hover: hover) {
     &:hover {
       background-color: color-mix(in srgb, var(--task-color) 65%, transparent);
+
+      .popupButton {
+        opacity: 100%;
+        pointer-events: all;
+      }
     }
   }
 }
 
 .content {
+
   display: grid;
   grid-template-rows: repeat(3, min-content);
   justify-content: flex-start;
@@ -67,6 +74,24 @@
   }
 }
 
+.popupButton {
+  opacity: 0%;
+  pointer-events: none;
+  width: 20px !important;
+  min-width: 20px !important;
+  height: 20px;
+  top: 5px;
+  right: 1%;
+  position: absolute;
+
+  transition: opacity 0.3s ease-in;
+
+  &:focus-visible{
+    opacity: 100%;
+    pointer-events: all;
+  }
+}
+
 @container (max-width:100px) {
   .label {
     font-size: 14px;
@@ -79,9 +104,10 @@
 }
 
 @container (max-width:40px) {
-  .label{
+  .label {
     -webkit-line-clamp: 4;
   }
+
   .time {
     display: none;
     grid-area: unset
@@ -161,6 +187,10 @@
 
   .tag {
     grid-area: unset;
+  }
+
+  .popupButton{
+    top: 5%;
   }
 
   @container (max-width:300px) {

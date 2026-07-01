@@ -1,5 +1,5 @@
 import getStyleTokens from '../libs/getStyleTokens.ts';
-import type { ThemeConfig } from 'antd';
+import { theme, type ThemeConfig } from 'antd';
 
 const {
   blueColor,
@@ -13,6 +13,7 @@ const {
 } = getStyleTokens();
 
 const antdTheme: ThemeConfig = {
+  algorithm: theme.darkAlgorithm,
   token: {
     colorPrimary: blueColor,
     colorText: textPrimary,
@@ -69,6 +70,13 @@ const antdTheme: ThemeConfig = {
 
       trackBg: bgSecondary,
       itemSelectedBg: bgPrimary,
+    },
+    Select: {
+      colorBgElevated: bgSecondary,
+      selectorBg: '#1f1f1f',
+      colorText: '#fff',
+      optionSelectedBg: '#303030',
+      optionActiveBg: '#404040',
     },
   },
 };
