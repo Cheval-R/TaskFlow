@@ -5,6 +5,7 @@ import { TagsProvider } from '@/entities/tag/model/TagsContext.tsx';
 import { TasksProvider } from '@/entities/task/model/TasksContext.tsx';
 import { ConfigProvider } from 'antd';
 import { WorkspaceProvider } from '@/entities/workspace/model/WorkspaceContext.tsx';
+import { TaskDetailsProvider } from '@/features/task-details/model/context/TaskDetailsContext.tsx';
 
 interface Props {
   children: ReactNode;
@@ -16,7 +17,9 @@ export const AppProvider = ({ children }: Props) => {
       <WorkspaceProvider>
         <CreateTaskModalProvider>
           <TagsProvider>
-            <TasksProvider>{children}</TasksProvider>
+            <TaskDetailsProvider>
+              <TasksProvider>{children}</TasksProvider>
+            </TaskDetailsProvider>
           </TagsProvider>
         </CreateTaskModalProvider>
       </WorkspaceProvider>

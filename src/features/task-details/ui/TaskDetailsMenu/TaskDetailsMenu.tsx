@@ -1,7 +1,5 @@
-import ss from './TaskSidebar.module.scss';
-import type { ITask } from '@/shared/types/task.types.ts';
+import ss from './TaskDetailsMenu.module.scss';
 import Tag from '@/shared/ui/Tag';
-import useGetTag from '@/entities/tag/model/useGetTag.ts';
 import { CloseOutlined, MoreOutlined } from '@ant-design/icons';
 import { Button, Flex, Typography } from 'antd';
 import { TrashIcon } from '@/assets/icons';
@@ -9,42 +7,54 @@ import { useTasks } from '@/entities/task/model/useTasks.ts';
 
 import formatMinuteToTime from '@/shared/model/formatMinuteToTime.ts';
 import { useCreateTaskModal } from '@/features/create-task-modal/model/useCreateTaskModal.ts';
+import { useTaskDetails } from '@/features/task-details/model/context/useTaskDetails.ts';
+import { useTags } from '@/entities/tag/model/useTags.ts';
 
-interface Props {
-  task: ITask;
-}
+interface Props {}
 
-export const TaskSidebar = ({ task }: Props) => {
-  const tag = useGetTag(task.tagValue);
+export const TaskDetailsMenu = ({}: Props) => {
+  const { openCreateTaskModal } = useCreateTaskModal();
+  const { selectedTaskID } = useTaskDetails();
   const {
     actions: { deleteTask },
+    tasks,
   } = useTasks();
+  const { tags } = useTags();
+  const { closeTaskDetails, isOpen } = useTaskDetails();
+  if (selectedTaskID === null) return <aside className={`${ss.sidebar} `} />;
+  const selectedTask = tasks.find((task) => task.id === selectedTaskID);
 
-  const { openCreateTaskModal } = useCreateTaskModal();
+  const tag = tags.find((tag) => tag.value === selectedTask?.tagValue);
+  if (selectedTask === undefined || tag === undefined) {
+    closeTaskDetails();
+    return <aside className={`${ss.sidebar} `} />;
+  }
+
   return (
-    <aside className={ss.sidebar}>
+    <aside className={`${ss.sidebar} ${isOpen ? ss.isOpen : ''}`}>
       <Button
         className={ss.closeButton}
         icon={<CloseOutlined />}
         type={'link'}
         danger={true}
+        onClick={closeTaskDetails}
       />
       <Flex vertical={true}>
         <Tag size={'small'} color={tag.color}>
           {tag.label}
         </Tag>
-        <Typography.Title level={4}>{task.label}</Typography.Title>
+        <Typography.Title level={4}>{selectedTask.label}</Typography.Title>
 
         <Typography.Text className={ss.date}>
-          {task.date.format('dddd, MMMM DD, YYYY')}
+          {selectedTask.date.format('dddd, MMMM DD, YYYY')}
         </Typography.Text>
 
         <Typography.Text>
-          {`${task.timeRange[0].format('HH:mm')} - ${task.timeRange[1].format('HH:mm')} (${formatMinuteToTime(task.timeRange[1].diff(task.timeRange[0], 'minute'))})`}
+          {`${selectedTask.timeRange[0].format('HH:mm')} - ${selectedTask.timeRange[1].format('HH:mm')} (${formatMinuteToTime(selectedTask.timeRange[1].diff(selectedTask.timeRange[0], 'minute'))})`}
         </Typography.Text>
         <Typography.Title level={5}>Description</Typography.Title>
         <Typography.Text className={ss.description}>
-          {task.description}
+          {selectedTask.description}
         </Typography.Text>
       </Flex>
       <Flex vertical={true} gap={'small'}>
@@ -52,7 +62,7 @@ export const TaskSidebar = ({ task }: Props) => {
           icon={<MoreOutlined />}
           onClick={() => {
             openCreateTaskModal({
-              ...task,
+              ...selectedTask,
             });
           }}
         >
@@ -64,7 +74,7 @@ export const TaskSidebar = ({ task }: Props) => {
           icon={<TrashIcon />}
           onClick={() => {
             confirm('Вы уверены, что хотите удалить задачу?')
-              ? deleteTask(task.id)
+              ? deleteTask(selectedTask.id)
               : null;
           }}
         >

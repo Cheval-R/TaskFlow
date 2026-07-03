@@ -10,8 +10,9 @@ import {
 } from '@/shared/model/timeConvert.ts';
 import { useTags } from '@/entities/tag/model/useTags.ts';
 import { useWorkspace } from '@/entities/workspace/model/useWorkspace.ts';
-import TaskSidebar from '@/widgets/TaskSidebar';
+import TaskSidebar from '../../features/task-details/ui/TaskDetailsMenu';
 import { useCreateTaskModal } from '@/features/create-task-modal/model/useCreateTaskModal.ts';
+import { useTaskDetails } from '@/features/task-details/model/context/useTaskDetails.ts';
 
 export const Day = () => {
   const { date } = useWorkspace();
@@ -26,6 +27,8 @@ export const Day = () => {
 
   const { isCreateModalOpen, openCreateTaskModal, closeCreateTaskModal } =
     useCreateTaskModal();
+  const { openTaskDetails, closeTaskDetails, selectedTaskID } =
+    useTaskDetails();
 
   useEffect(() => {
     const workspaceElement = workspaceRef.current;
@@ -43,6 +46,14 @@ export const Day = () => {
       if (workspaceElement) observer.unobserve(workspaceElement);
     };
   }, []);
+
+  function taskClickHandler(id: string) {
+    if (id === selectedTaskID) {
+      closeTaskDetails();
+    } else {
+      openTaskDetails(id);
+    }
+  }
 
   const filteredTasks = useMemo(() => {
     return tasks.filter((task) => {
@@ -96,12 +107,11 @@ export const Day = () => {
               key={task.id}
               task={task}
               onDelete={deleteTask}
-              onEdit={(taskValues) => openCreateTaskModal(taskValues)}
+              onClick={taskClickHandler}
             />
           );
         })}
       </div>
-      <TaskSidebar task={tasks[0]} />
     </>
   );
 };

@@ -1,9 +1,10 @@
 import ss from './AddTaskForm.module.scss';
 
-import type { ITag } from '@/shared/types/tag.types.ts';
+import type { ITag } from 'src/shared/types/tag.types.ts';
 import { Button, ColorPicker, Flex, Form, Input } from 'antd';
 import type { Color } from 'antd/es/color-picker';
 import { useTags } from '@/entities/tag/model/useTags.ts';
+
 interface Props {}
 
 export const AddTaskForm = ({}: Props) => {

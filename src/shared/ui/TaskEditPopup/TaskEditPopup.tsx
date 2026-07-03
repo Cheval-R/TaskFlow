@@ -38,7 +38,12 @@ export const TaskEditPopup = ({ task, className }: Props) => {
   ];
   return (
     <Dropdown trigger={['click']} menu={{ items }}>
-      <Button className={className} icon={<EllipsisOutlined />} type={'text'} />
+      <Button
+        className={className}
+        icon={<EllipsisOutlined />}
+        type={'text'}
+        onClick={(event) => event.stopPropagation()}
+      />
     </Dropdown>
   );
 };

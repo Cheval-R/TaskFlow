@@ -6,7 +6,7 @@
   right: 0;
   height: 100%;
   width: 350px;
-  z-index: 100;
+  z-index: 1000;
 
   border: 1px solid var.$border-subtle;
   background-color: var.$bg-secondary;
@@ -17,14 +17,13 @@
   transform: translateX(100%);
 
   transition: all 0.3s ease-in-out;
-  z-index: 1000;
-}
 
-.isOpen {
-  visibility: visible;
-  opacity: 1;
-  transform: translateX(0);
 }
+  .isOpen {
+    visibility: visible;
+    opacity: 1;
+    transform: translateX(0);
+  }
 
 .dateTimeWrapper {
   display: flex;
