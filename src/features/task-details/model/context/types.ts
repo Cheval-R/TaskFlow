@@ -4,7 +4,6 @@ export type TTaskDetailsActions = {
 };
 
 export type TTaskDetailsState = {
-  isOpen: boolean;
   selectedTaskID: string | null;
 } | null;
 

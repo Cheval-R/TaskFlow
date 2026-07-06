@@ -14,13 +14,12 @@ interface Props {}
 
 export const TaskDetailsMenu = ({}: Props) => {
   const { openCreateTaskModal } = useCreateTaskModal();
-  const { selectedTaskID } = useTaskDetails();
   const {
     actions: { deleteTask },
     tasks,
   } = useTasks();
   const { tags } = useTags();
-  const { closeTaskDetails, isOpen } = useTaskDetails();
+  const { closeTaskDetails, selectedTaskID } = useTaskDetails();
   if (selectedTaskID === null) return <aside className={`${ss.sidebar} `} />;
   const selectedTask = tasks.find((task) => task.id === selectedTaskID);
 
@@ -31,7 +30,7 @@ export const TaskDetailsMenu = ({}: Props) => {
   }
 
   return (
-    <aside className={`${ss.sidebar} ${isOpen ? ss.isOpen : ''}`}>
+    <aside className={`${ss.sidebar} ${selectedTaskID ? ss.isOpen : ''}`}>
       <Button
         className={ss.closeButton}
         icon={<CloseOutlined />}

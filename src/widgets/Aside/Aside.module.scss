@@ -30,3 +30,54 @@
   width: 100%;
 }
 
+.calendar {
+  font-size: 12px;
+}
+
+.calendar :global(.ant-picker-cell) {
+  width: 20px;
+  height: 20px;
+  padding-block: 0;
+}
+
+.calendar :global(.ant-picker-cell:not(.ant-picker-cell-in-view) .ant-picker-cell-inner) {
+  color: #a1a7b3
+}
+
+.calendar :global(thead) {
+  height: 25px;
+}
+
+.calendarHeader {
+  display: grid !important;
+  grid-template-areas:
+    'year month'
+    'radio radio';
+  grid-template-columns: 1fr 1fr;
+  font-size: 12px;
+  gap: 8px;
+}
+
+.calendarHeader :global(.ant-picker-calendar-year-select) {
+  grid-area: year;
+  width: 100%;
+
+}
+
+.calendarHeader :global(.ant-picker-calendar-month-select) {
+  grid-area: month;
+  margin-inline: 0px !important;
+  width: 100%;
+}
+
+.calendarHeader :global(.ant-radio-group) {
+  grid-area: radio;
+  display: flex;
+  width: 100%;
+  margin-inline: 0px !important;
+}
+
+.calendarHeader :global(.ant-radio-button-wrapper) {
+  flex: 1;
+  text-align: center;
+}
